@@ -1,0 +1,20 @@
+MI JORNADA — primera versión funcional
+
+Archivos:
+- index.html: aplicación.
+- manifest.json: configuración de instalación PWA.
+- sw.js: caché para funcionamiento básico sin conexión.
+- icon-192.png e icon-512.png: iconos.
+
+Publicación gratuita sugerida:
+1. Crear un repositorio público en GitHub.
+2. Subir todos estos archivos a la raíz del repositorio.
+3. Settings > Pages > Deploy from a branch > main > /(root) > Save.
+4. Abrir la URL de GitHub Pages por HTTPS.
+5. En Android, abrir en Chrome y elegir menú ⋮ > Instalar aplicación o Añadir a pantalla principal.
+
+Importante:
+- Los perfiles son locales a este dispositivo/navegador, no cuentas sincronizadas.
+- Exporta respaldos JSON regularmente.
+- Antes de depender de los cálculos para decisiones financieras, prueba con datos ficticios y revisa resultados.
+- Este primer prototipo no es un servicio financiero ni incluye autenticación remota.
