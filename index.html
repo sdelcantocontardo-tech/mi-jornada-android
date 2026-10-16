@@ -1,28 +1,799 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167447"><meta name="description" content="Mi Jornada: ingresos, metas, combustible, gastos, deudas y libro de saldos."><link rel="manifest" href="manifest.json"><title>Mi Jornada</title>
-<style>
-:root{--green:#167447;--green2:#208b55;--pale:#eaf7ef;--ink:#193328;--muted:#66776e;--line:#dce8df;--red:#bd2727;--redbg:#fff0f0;--white:#fff;--shadow:0 5px 20px #183b2610}*{box-sizing:border-box}body{margin:0;background:#f4f8f5;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.top{background:linear-gradient(120deg,#105a37,#208b55);color:white;padding:18px max(16px,calc((100% - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-size:1.35rem;font-weight:850;letter-spacing:.2px}.subbrand{font-size:.82rem;opacity:.88}.top-actions{display:flex;gap:8px;align-items:center}.top button{background:#ffffff20;border:1px solid #ffffff55;color:#fff;border-radius:10px;padding:8px 11px}.wrap{max-width:1120px;margin:auto;padding:16px}.status{padding:10px 12px;border-radius:10px;margin:0 0 12px;background:#e9f7ed;color:#145b34;font-size:.9rem}.status.error{background:var(--redbg);color:var(--red)}.status.warn{background:#fff6df;color:#79530a}.tabs{display:flex;gap:7px;overflow-x:auto;padding:3px 0 12px;margin-bottom:6px}.tabs button{white-space:nowrap;border:1px solid var(--line);background:white;color:var(--ink);border-radius:999px;padding:10px 14px;font-weight:650}.tabs button.active{background:var(--green);color:white;border-color:var(--green)}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 12;background:white;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);min-width:0}.half{grid-column:span 6}.third{grid-column:span 4}.quarter{grid-column:span 3}.card h2,.card h3{margin:0 0 12px}.card h2{font-size:1.1rem}.card h3{font-size:.98rem}.hero-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.metric{background:var(--pale);border:1px solid #cce8d5;border-radius:13px;padding:13px;min-width:0}.metric.primary{background:var(--green);color:white;border-color:var(--green)}.metric .label{font-size:.82rem;opacity:.9}.metric .value{font-weight:850;font-size:clamp(1.15rem,3vw,1.75rem);margin-top:7px;overflow-wrap:anywhere}.metric small{display:block;margin-top:5px;opacity:.8}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:.84rem;font-weight:700;color:#41574b}.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #cbd9ce;background:#fff;border-radius:10px;padding:10px 11px;color:var(--ink)}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #8dd5a8;border-color:var(--green)}.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:750;background:var(--green);color:white}.btn.secondary{background:#eaf4ed;color:#155b36;border:1px solid #cce3d2}.btn.danger{background:var(--red)}.btn.small{font-size:.82rem;padding:7px 10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.hint{color:var(--muted);font-size:.84rem;line-height:1.45}.tablewrap{overflow:auto;margin-top:12px}table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:600px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:#52685b;background:#f7faf8;font-size:.8rem}td .btn{margin:2px}.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.75rem;font-weight:750;background:#e7f6eb;color:#166139}.pill.red{background:#ffe8e8;color:#a51d1d}.pill.gray{background:#edf1ee;color:#58675d}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}.divider{height:1px;background:var(--line);margin:14px 0}.bank-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin:7px 0}.foot{padding:24px 8px;color:var(--muted);text-align:center;font-size:.8rem}.auth{max-width:440px;margin:28px auto}.hidden{display:none!important}.redtext{color:var(--red);font-weight:750}.notice{background:#fff6df;color:#74520b;padding:12px;border-radius:10px;font-size:.88rem}.bar{height:10px;background:#e3eee6;border-radius:99px;overflow:hidden;margin-top:10px}.bar>span{display:block;height:100%;background:var(--green2);width:0}.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:end}.filters .field{min-width:140px;flex:1}.inlinecheck{display:flex;gap:8px;align-items:center;font-size:.88rem}.inlinecheck input{width:auto}
-@media(max-width:720px){.wrap{padding:11px}.top{padding:15px 13px}.hero-grid{grid-template-columns:1fr}.half,.third,.quarter{grid-column:span 12}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.metric .value{font-size:1.45rem}.bank-row{grid-template-columns:1fr 1fr}.bank-row button{grid-column:1/-1}.top-actions{flex-direction:column;align-items:stretch}.top-actions button{padding:7px}}
-</style></head><body>
-<header class="top"><div><div class="brand">🌿 Mi Jornada</div><div class="subbrand">Ordena tu trabajo. Cumple tus metas.</div></div><div class="top-actions"><span id="userLabel" class="subbrand">Modo sin conexión</span><button id="authToggle">Conectar nube</button></div></header>
-<main class="wrap">
-<div id="globalStatus" class="status warn">La app está preparada. Conecta Firebase para habilitar respaldo en la nube.</div>
-<section id="authPanel" class="card auth hidden"><h2>Cuenta y respaldo en la nube</h2><p class="hint">Crea una cuenta o inicia sesión. Primero debes configurar los datos de Firebase en el archivo <b>firebase-config.js</b>.</p><div class="formgrid"><div class="field full"><label>Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.cl"></div><div class="field full"><label>Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres"></div></div><div class="actions"><button class="btn" id="loginBtn">Iniciar sesión</button><button class="btn secondary" id="signupBtn">Crear cuenta</button><button class="btn secondary" id="logoutBtn">Cerrar sesión</button></div><p id="authHelp" class="hint">No compartas tu contraseña. La base de datos debe tener las reglas de seguridad incluidas en este proyecto.</p></section>
-<nav class="tabs" aria-label="Secciones"><button class="active" data-page="resumen">Resumen</button><button data-page="jornada">Jornada</button><button data-page="combustible">Combustible</button><button data-page="gastos">Gastos</button><button data-page="deudas">Deudas y pagos</button><button data-page="libro">Libro de saldos</button><button data-page="historial">Historial</button><button data-page="config">Configuración</button></nav>
-<section id="page-resumen" class="page active"><div class="grid">
-<div class="card"><div class="sectionhead"><h2>Periodo de control</h2><span id="periodBadge" class="pill">Sin guardar</span></div><div class="formgrid"><div class="field full"><label>Nombre del periodo</label><input id="periodName" placeholder="Ej. Periodo octubre-noviembre"></div><div class="field"><label>Desde</label><input id="periodStart" type="date"></div><div class="field"><label>Hasta</label><input id="periodEnd" type="date"></div><div class="field"><label>Días de trabajo por semana</label><select id="workDays"><option value="1">1 día</option><option value="2">2 días</option><option value="3">3 días</option><option value="4">4 días</option><option value="5" selected>5 días</option><option value="6">6 días</option><option value="7">7 días</option></select></div><div class="field"><label>Presupuesto combustible diario</label><input id="fuelDaily" inputmode="numeric" placeholder="$ 30.000"></div><div class="field"><label>Presupuesto gastos diarios</label><input id="expenseDaily" inputmode="numeric" placeholder="$ 5.000"></div><div class="field"><label>Meta personal adicional del periodo</label><input id="profitGoal" inputmode="numeric" placeholder="$ 0"></div></div><div class="actions"><button class="btn" id="savePeriod">Guardar periodo</button><button class="btn secondary" id="newPeriod">Nuevo periodo</button></div><p class="hint">Puedes registrar movimientos atrasados. Los días trabajados sin carga de combustible se marcan en la pestaña Combustible.</p></div>
-<div class="card"><h2>Resumen financiero</h2><div class="hero-grid"><div class="metric primary"><div class="label">Meta del periodo</div><div id="mGoal" class="value">$0</div><small>Obligaciones y presupuestos</small></div><div class="metric primary"><div class="label">Producción diaria necesaria</div><div id="mDaily" class="value">$0</div><small id="dailySub">Según días restantes</small></div><div class="metric primary"><div class="label">Falta por generar</div><div id="mRemaining" class="value">$0</div><small>Descontando ingresos y ajustes</small></div></div><div class="bar"><span id="progressBar"></span></div><p id="progressText" class="hint">Sin ingresos registrados en el periodo.</p><div class="divider"></div><div class="hero-grid"><div class="metric"><div class="label">Ingresos registrados</div><div id="mIncome" class="value">$0</div></div><div class="metric"><div class="label">Gastos de combustible</div><div id="mFuel" class="value">$0</div></div><div class="metric"><div class="label">Gastos cotidianos</div><div id="mExpenses" class="value">$0</div></div><div class="metric"><div class="label">Cuotas pendientes del periodo</div><div id="mDebt" class="value">$0</div></div><div class="metric"><div class="label">Combustible disponible</div><div id="mFuelBudget" class="value">$0</div></div><div class="metric"><div class="label">Gastos disponibles</div><div id="mExpenseBudget" class="value">$0</div></div></div></div>
-<div class="card half"><h2>Últimos ingresos</h2><div id="recentIncome" class="empty">Aún no hay ingresos.</div></div><div class="card half"><h2>Alertas</h2><div id="alerts" class="empty">No hay alertas por ahora.</div></div>
-</div></section>
-<section id="page-jornada" class="page"><div class="grid"><div class="card half"><h2>Registrar ingreso</h2><form id="incomeForm"><div class="formgrid"><div class="field"><label>Fecha</label><input id="incomeDate" type="date" required></div><div class="field"><label>Origen</label><select id="incomeSource"><option>Uber</option><option>DiDi</option><option>Otros ingresos</option></select></div><div class="field" id="customSourceWrap"><label>Nombre de origen personalizado</label><input id="customSource" placeholder="Ej. Cabify, trabajo extra"></div><div class="field"><label>Monto ($ CLP)</label><input id="incomeAmount" inputmode="numeric" required placeholder="$ 45.000"></div><div class="field"><label>Horas trabajadas (opcional)</label><input id="incomeHours" type="number" min="0" step="0.25" placeholder="8"></div><div class="field"><label>Observación</label><input id="incomeNote" placeholder="Opcional"></div></div><div class="actions"><button class="btn" type="submit">Guardar ingreso</button></div></form></div><div class="card half"><h2>Ingresos registrados</h2><div class="filters"><div class="field"><label>Desde</label><input id="incomeFilterStart" type="date"></div><div class="field"><label>Hasta</label><input id="incomeFilterEnd" type="date"></div><button class="btn secondary" id="incomeFilterClear">Limpiar filtro</button></div><div id="incomeTable"></div></div></div></section>
-<section id="page-combustible" class="page"><div class="grid"><div class="card half"><h2>Registrar combustible</h2><form id="fuelForm"><div class="formgrid"><div class="field"><label>Fecha</label><input id="fuelDate" type="date" required></div><div class="field"><label>Tipo de registro</label><select id="fuelType"><option value="load">Carga de combustible</option><option value="noFuel">Jornada trabajada sin cargar</option></select></div><div class="field"><label>Monto pagado ($)</label><input id="fuelAmount" inputmode="numeric" placeholder="$ 30.000"></div><div class="field"><label>Litros cargados</label><input id="fuelLitres" type="number" min="0" step="0.01" placeholder="Ej. 32,5"></div><div class="field"><label>Odómetro (km)</label><input id="fuelOdo" type="number" min="0" step="0.1" placeholder="Ej. 125430"></div><div class="field"><label>Precio por litro ($)</label><input id="fuelPrice" inputmode="numeric" placeholder="$ 1.350"></div><div class="field full"><label>Observación</label><input id="fuelNote" placeholder="Opcional"></div></div><p class="hint">El presupuesto diario se libera una sola vez por día trabajado sin carga. Si registras una carga en la misma fecha, no se aplicará liberación ese día.</p><div class="actions"><button class="btn" type="submit">Guardar registro</button></div></form></div><div class="card half"><h2>Resumen de combustible</h2><div class="hero-grid"><div class="metric"><div class="label">Presupuesto inicial</div><div id="fuelInitial" class="value">$0</div></div><div class="metric"><div class="label">Utilizado</div><div id="fuelUsed" class="value">$0</div></div><div class="metric"><div class="label">Liberado sin carga</div><div id="fuelReleased" class="value">$0</div></div></div><div id="fuelTable"></div></div></div></section>
-<section id="page-gastos" class="page"><div class="grid"><div class="card half"><h2>Registrar gasto</h2><form id="expenseForm"><div class="formgrid"><div class="field"><label>Fecha</label><input id="expenseDate" type="date" required></div><div class="field"><label>Categoría</label><select id="expenseCategory"><option>Alimentación</option><option>Hogar</option><option>Estacionamiento</option><option>Peajes</option><option>Telefonía</option><option>Mantención vehículo</option><option>Salud</option><option>Otros</option></select></div><div class="field"><label>Monto ($)</label><input id="expenseAmount" inputmode="numeric" required placeholder="$ 5.000"></div><div class="field"><label>Descripción</label><input id="expenseNote" placeholder="Opcional"></div></div><div class="actions"><button class="btn" type="submit">Guardar gasto</button></div></form><p class="hint">Los gastos cotidianos incluidos en el presupuesto reducen el saldo disponible de ese presupuesto; no vuelven a sumarse a la meta inicial.</p></div><div class="card half"><h2>Gastos registrados</h2><div id="expenseTable"></div></div></div></section>
-<section id="page-deudas" class="page"><div class="grid"><div class="card half"><h2>Registrar deuda / compromiso</h2><form id="debtForm"><div class="formgrid"><div class="field"><label>Descripción</label><input id="debtDesc" required placeholder="Ej. Préstamo vehículo"></div><div class="field"><label>Beneficiario</label><input id="debtBeneficiary" placeholder="Banco, persona, empresa"></div><div class="field"><label>Monto de cuota ($)</label><input id="debtAmount" inputmode="numeric" required placeholder="$ 100.000"></div><div class="field"><label>Primer vencimiento</label><input id="debtDue" type="date" required></div><div class="field"><label>Número de cuotas</label><input id="debtCount" type="number" min="1" value="1" required></div><div class="field"><label>Tipo de pago</label><select id="debtType"><option value="once">Una vez</option><option value="recurring">Recurrente</option></select></div><div id="recurrenceFields" class="field full hidden"><label>Repetir cada</label><div class="formgrid"><div class="field"><input id="repeatEvery" type="number" min="1" value="1"></div><div class="field"><select id="repeatUnit"><option value="daily">Día(s)</option><option value="weekly">Semana(s)</option><option value="monthly" selected>Mes(es)</option><option value="yearly">Año(s)</option></select></div></div></div><div class="field full"><label>Observación</label><input id="debtNote" placeholder="Opcional"></div></div><div class="actions"><button class="btn" type="submit">Guardar deuda</button></div></form></div><div class="card half"><h2>Registrar pago</h2><form id="paymentForm"><div class="formgrid"><div class="field full"><label>Deuda</label><select id="paymentDebt" required><option value="">Selecciona deuda</option></select></div><div class="field"><label>Fecha de pago</label><input id="paymentDate" type="date" required></div><div class="field"><label>Monto pagado ($)</label><input id="paymentAmount" inputmode="numeric" required placeholder="$ 100.000"></div><div class="field full"><label>Observación</label><input id="paymentNote" placeholder="Opcional"></div></div><div class="actions"><button class="btn" type="submit">Registrar pago</button></div></form></div><div class="card"><h2>Deudas y pagos registrados</h2><div id="debtTable"></div><div class="divider"></div><h3>Historial de pagos</h3><div id="paymentTable"></div></div></div></section>
-<section id="page-libro" class="page"><div class="grid"><div class="card half"><h2>Ingreso de libro de saldos</h2><form id="ledgerForm"><div class="formgrid"><div class="field"><label>Fecha</label><input id="ledgerDate" type="date" required></div><div class="field"><label>Momento</label><select id="ledgerMoment"><option value="start">Inicio de jornada</option><option value="end">Término de jornada</option></select></div><div class="field"><label>Saldo Uber ($)</label><input id="balUber" inputmode="numeric" placeholder="$ 0"></div><div class="field"><label>Saldo DiDi ($)</label><input id="balDidi" inputmode="numeric" placeholder="$ 0"></div><div class="field"><label>Efectivo billetes ($)</label><input id="balNotes" inputmode="numeric" placeholder="$ 0"></div><div class="field"><label>Efectivo monedas ($)</label><input id="balCoins" inputmode="numeric" placeholder="$ 0"></div><div class="field full"><label>Bancos y otros saldos</label><div id="bankFields"></div><button class="btn secondary small" type="button" id="addBank">+ Agregar banco / cuenta</button></div></div><div class="actions"><button class="btn" type="submit">Guardar libro de saldos</button></div><p class="hint">El libro es informativo: sus saldos no se suman a ingresos ni alteran la meta.</p></form></div><div class="card half"><h2>Comparación de libros</h2><p class="hint">Compara el total de dos registros para estimar la variación real de saldos.</p><div class="formgrid"><div class="field"><label>Libro inicial</label><select id="ledgerA"></select></div><div class="field"><label>Libro final</label><select id="ledgerB"></select></div></div><div class="actions"><button class="btn" id="compareLedgers">Comparar</button></div><div id="ledgerComparison" class="empty">Selecciona dos libros para comparar.</div></div><div class="card"><h2>Registros de libros de saldos</h2><div id="ledgerTable"></div></div></div></section>
-<section id="page-historial" class="page"><div class="card"><div class="sectionhead"><h2>Historial de movimientos</h2><button class="btn secondary" id="exportCsv">Exportar CSV</button></div><div class="filters"><div class="field"><label>Tipo</label><select id="historyType"><option value="all">Todos</option><option value="income">Ingresos</option><option value="fuel">Combustible</option><option value="expense">Gastos</option><option value="debt">Deudas</option><option value="payment">Pagos</option><option value="ledger">Libro de saldos</option><option value="period">Periodos</option></select></div><div class="field"><label>Desde</label><input id="historyStart" type="date"></div><div class="field"><label>Hasta</label><input id="historyEnd" type="date"></div><button class="btn secondary" id="applyHistory">Filtrar</button><button class="btn secondary" id="clearHistory">Limpiar</button></div><div id="historyTable"></div></div></section>
-<section id="page-config" class="page"><div class="grid"><div class="card half"><h2>Configuración de Firebase</h2><p class="hint">Para habilitar sincronización en la nube, crea un proyecto Firebase, activa Authentication por correo/contraseña y Firestore. Luego completa el archivo <b>firebase-config.js</b> incluido en el paquete y publica por HTTPS.</p><div class="notice">No pegues aquí contraseñas ni claves privadas. La configuración web de Firebase no es una contraseña; la seguridad depende de las reglas de Firestore incluidas.</div><div class="actions"><button class="btn secondary" id="showAuth">Abrir acceso a la nube</button></div><p id="firebaseState" class="hint">Firebase no configurado.</p></div><div class="card half"><h2>Respaldo y datos</h2><p class="hint">Puedes exportar tus movimientos a CSV desde Historial. La exportación es un respaldo legible, pero no reemplaza el respaldo automático en nube.</p><div class="actions"><button class="btn secondary" id="exportJson">Descargar respaldo JSON</button><button class="btn danger" id="clearLocal">Borrar datos locales</button></div><p class="hint">Borrar datos locales no borra datos de Firebase. Usa esta acción solo si estás seguro.</p></div><div class="card"><h2>Reglas de cálculo</h2><ul class="hint"><li>La meta contempla presupuestos diarios, obligaciones que vencen dentro del periodo y la meta personal adicional.</li><li>Los ingresos registrados reducen lo que falta por generar.</li><li>Gastos y combustible presupuestados rebajan su presupuesto disponible, evitando doble descuento.</li><li>Una jornada marcada sin carga libera el monto diario de combustible y reduce la meta pendiente una sola vez.</li><li>El libro de saldos es informativo y no modifica la meta.</li></ul></div></div></section>
-<div class="foot">Mi Jornada · Proyecto inicial sin logo · Montos en pesos chilenos (CLP)</div>
-</main>
-<script type="module" src="app.js"></script></body></html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Jornada</title>
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #e8f5e9;
+            --accent-green: #4caf50;
+            --alert-red: #d32f2f;
+            --alert-bg: #ffebee;
+            --bg-color: #f4f6f5;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #ccc;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Pestañas de navegación */
+        .tabs {
+            display: flex;
+            background-color: #ffffff;
+            overflow-x: auto;
+            border-bottom: 2px solid var(--primary-green);
+            white-space: nowrap;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tarjetas y Secciones */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary-green);
+            border-bottom: 1px solid var(--light-green);
+            padding-bottom: 8px;
+        }
+
+        /* Formularios y Tablas */
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button.btn-primary {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button.btn-primary:hover {
+            background-color: #1b5e20;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+        }
+
+        .highlight-box {
+            background-color: var(--light-green);
+            border-left: 5px solid var(--primary-green);
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .alert-box {
+            background-color: var(--alert-bg);
+            border-left: 5px solid var(--alert-red);
+            color: var(--alert-red);
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>MI JORNADA</header>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(event, 'resumen')">Resumen</button>
+    <button class="tab-btn" onclick="switchTab(event, 'jornada')">Jornada</button>
+    <button class="tab-btn" onclick="switchTab(event, 'combustible')">Combustible</button>
+    <button class="tab-btn" onclick="switchTab(event, 'gastos')">Gastos</button>
+    <button class="tab-btn" onclick="switchTab(event, 'deudas')">Deudas y Pagos</button>
+    <button class="tab-btn" onclick="switchTab(event, 'saldos')">Libro de Saldos</button>
+    <button class="tab-btn" onclick="switchTab(event, 'historial')">Historial</button>
+</div>
+
+<div class="container">
+
+    <!-- 1. RESUMEN -->
+    <div id="resumen" class="tab-content active">
+        <div class="card">
+            <h3>Periodo de Control</h3>
+            <div class="form-group">
+                <label>Nombre del Periodo:</label>
+                <input type="text" id="nombrePeriodo" placeholder="Ej: Octubre 2026 - Quincena 1" onchange="guardarConfigPeriodo()">
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Desde:</label>
+                    <input type="date" id="periodoDesde" onchange="guardarConfigPeriodo()">
+                </div>
+                <div class="form-group">
+                    <label>Hasta:</label>
+                    <input type="date" id="periodoHasta" onchange="guardarConfigPeriodo()">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Días de trabajo a la semana (1 a 7):</label>
+                <input type="number" id="diasSemanaTrabajo" min="1" max="7" value="6" onchange="guardarConfigPeriodo()">
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Resumen Financiero (Destacado)</h3>
+            <div class="highlight-box">
+                <strong>Meta del Periodo:</strong> <span id="lblMetaPeriodo">$0</span><br>
+                <strong>Producción Diaria Necesaria:</strong> <span id="lblProdDiaria">$0</span><br>
+                <strong>Falta por Generar:</strong> <span id="lblFaltaGenerar">$0</span>
+            </div>
+            <div style="background: #f9f9f9; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <strong>Ingresos Totales:</strong> <span id="lblTotalIngresos">$0</span><br>
+                <strong>Gastos Totales Registrados:</strong> <span id="lblTotalGastosReg">$0</span><br>
+                <strong>Combustible Gastado:</strong> <span id="lblTotalCombustibleReg">$0</span><br>
+                <strong>Cuotas Pendientes:</strong> <span id="lblTotalDeudasPend">$0</span>
+            </div>
+            <div style="background: #e3f2fd; padding: 10px; border-radius: 4px;">
+                <strong>Presupuesto de Gastos Disponible:</strong> <span id="lblPresupGastosDisp">$0</span><br>
+                <strong>Presupuesto Combustible Disponible:</strong> <span id="lblPresupCombuDisp">$0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. JORNADA -->
+    <div id="jornada" class="tab-content">
+        <div class="card">
+            <h3>Registrar Ingreso</h3>
+            <div class="form-group">
+                <label>Fecha:</label>
+                <input type="date" id="ingresoFecha">
+            </div>
+            <div class="form-group">
+                <label>Origen:</label>
+                <select id="ingresoOrigen">
+                    <option value="Uber">Uber</option>
+                    <option value="DiDi">DiDi</option>
+                    <option value="Otros">Otros ingresos</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Monto ($):</label>
+                <input type="text" id="ingresoMonto" placeholder="Ej: 35.000" oninput="formatearInputMoneda(this)">
+            </div>
+            <button class="btn-primary" onclick="registrarIngreso()">Guardar Ingreso</button>
+        </div>
+
+        <div class="card">
+            <h3>Ingresos Registrados</h3>
+            <div class="form-group">
+                <label>Filtrar por:</label>
+                <select id="filtroIngresos" onchange="renderizarIngresos()">
+                    <option value="todos">Todos</option>
+                    <option value="semana">Esta Semana</option>
+                    <option value="mes">Este Mes</option>
+                </select>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Fecha</th><th>Origen</th><th>Monto</th><th>Acción</th></tr>
+                </thead>
+                <tbody id="tablaIngresosBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 3. COMBUSTIBLE -->
+    <div id="combustible" class="tab-content">
+        <div class="card">
+            <h3>Configuración y Registro de Combustible</h3>
+            <div class="form-group">
+                <label>Presupuesto Diario Combustible ($):</label>
+                <input type="text" id="combuDiario" placeholder="Ej: 30.000" oninput="formatearInputMoneda(this)" value="30.000" onchange="guardarConfigPeriodo()">
+            </div>
+            <div class="form-group">
+                <label>Fecha Carga:</label>
+                <input type="date" id="combuFecha">
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Monto Carga ($): (0 si no cargó hoy)</label>
+                    <input type="text" id="combuMonto" placeholder="Ej: 25.000" oninput="formatearInputMoneda(this)" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Odómetro (Km):</label>
+                    <input type="number" id="combuOdometro" placeholder="Ej: 45200">
+                </div>
+            </div>
+            <button class="btn-primary" onclick="registrarCombustible()">Registrar Jornada / Carga</button>
+        </div>
+
+        <div class="card">
+            <h3>Cargas y Rendimiento Registrado</h3>
+            <table>
+                <thead>
+                    <tr><th>Fecha</th><th>Monto</th><th>Km</th><th>Rendimiento</th></tr>
+                </thead>
+                <tbody id="tablaCombuBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 4. GASTOS -->
+    <div id="gastos" class="tab-content">
+        <div class="card">
+            <h3>Configuración Gastos Diarios</h3>
+            <div class="form-group">
+                <label>Presupuesto Gasto Diario ($):</label>
+                <input type="text" id="gastoDiarioConfig" value="5.000" oninput="formatearInputMoneda(this)" onchange="guardarConfigPeriodo()">
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Registrar Gasto</h3>
+            <div class="form-group">
+                <label>Fecha:</label>
+                <input type="date" id="gastoFecha">
+            </div>
+            <div class="form-group">
+                <label>Categoría:</label>
+                <select id="gastoCategoria">
+                    <option value="Colación">Colación</option>
+                    <option value="Peajes">Peajes</option>
+                    <option value="Imprevistos">Imprevistos</option>
+                    <option value="Otros">Otros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Monto ($):</label>
+                <input type="text" id="gastoMonto" placeholder="Ej: 4.500" oninput="formatearInputMoneda(this)">
+            </div>
+            <button class="btn-primary" onclick="registrarGasto()">Guardar Gasto</button>
+        </div>
+
+        <div class="card">
+            <h3>Gastos Registrados</h3>
+            <table>
+                <thead>
+                    <tr><th>Fecha</th><th>Categoría</th><th>Monto</th></tr>
+                </thead>
+                <tbody id="tablaGastosBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 5. DEUDAS Y PAGOS -->
+    <div id="deudas" class="tab-content">
+        <div class="card">
+            <h3>Registrar Deuda / Compromiso</h3>
+            <div class="form-group"><label>Descripción:</label><input type="text" id="deudaDesc" placeholder="Ej: Dividendo / Arriendo auto"></div>
+            <div class="form-group"><label>Beneficiario:</label><input type="text" id="deudaBeneficiario" placeholder="Ej: Banco / Automora"></div>
+            <div class="grid-2">
+                <div class="form-group"><label>Monto Cuota ($):</label><input type="text" id="deudaMonto" oninput="formatearInputMoneda(this)"></div>
+                <div class="form-group"><label>Fecha Vencimiento:</label><input type="date" id="deudaVenc"></div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label>N° Cuotas:</label><input type="number" id="deudaNumCuotas" value="1"></div>
+                <div class="form-group">
+                    <label>Tipo de Pago:</label>
+                    <select id="deudaTipoPago" onchange="toggleRecurrencia()">
+                        <option value="Una vez">Una vez</option>
+                        <option value="Recurrente">Recurrente</option>
+                    </select>
+                </div>
+            </div>
+            <div id="panelRecurrencia" style="display:none; background: var(--light-green); padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                <div class="grid-2">
+                    <div class="form-group"><label>Repetir cada:</label><input type="number" id="recurRepetir" value="1"></div>
+                    <div class="form-group">
+                        <label>Unidad:</label>
+                        <select id="recurUnidad">
+                            <option value="diario">Diario</option>
+                            <option value="semanal">Semanal</option>
+                            <option value="mensual">Mensual</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="registrarDeuda()">Guardar Deuda</button>
+        </div>
+
+        <div class="card">
+            <h3>Registrar Pago de Deuda</h3>
+            <div class="form-group">
+                <label>Seleccionar Deuda:</label>
+                <select id="selectDeudasPagos"></select>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label>Fecha Pago:</label><input type="date" id="pagoFecha"></div>
+                <div class="form-group"><label>Monto Pagado ($):</label><input type="text" id="pagoMonto" oninput="formatearInputMoneda(this)"></div>
+            </div>
+            <button class="btn-primary" onclick="registrarPagoDeuda()">Registrar Pago</button>
+        </div>
+
+        <div class="card">
+            <h3>Deudas y Pagos Registrados</h3>
+            <table>
+                <thead>
+                    <tr><th>Descripción</th><th>Beneficiario</th><th>Cuota</th><th>Vencimiento</th><th>Estado</th></tr>
+                </thead>
+                <tbody id="tablaDeudasBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 6. LIBRO DE SALDOS -->
+    <div id="saldos" class="tab-content">
+        <div class="card">
+            <h3>Ingreso de Libro de Saldos</h3>
+            <div class="grid-2">
+                <div class="form-group"><label>Fecha:</label><input type="date" id="saldoFecha"></div>
+                <div class="form-group">
+                    <label>Momento:</label>
+                    <select id="saldoMomento">
+                        <option value="Inicio de jornada">Inicio de jornada</option>
+                        <option value="Término de jornada">Término de jornada</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label>Uber ($):</label><input type="text" id="saldoUber" value="0" oninput="formatearInputMoneda(this)"></div>
+                <div class="form-group"><label>DiDi ($):</label><input type="text" id="saldoDidi" value="0" oninput="formatearInputMoneda(this)"></div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group"><label>Efectivo (Billetes) ($):</label><input type="text" id="saldoBilletes" value="0" oninput="formatearInputMoneda(this)"></div>
+                <div class="form-group"><label>Efectivo (Monedas) ($):</label><input type="text" id="saldoMonedas" value="0" oninput="formatearInputMoneda(this)"></div>
+            </div>
+            
+            <div id="bancosContainer">
+                <label>Bancos de Chile:</label>
+                <div class="grid-2 form-group">
+                    <input type="text" placeholder="Nombre Banco (Ej: Banco Estado)" class="banco-nombre">
+                    <input type="text" placeholder="Monto ($)" class="banco-monto" value="0" oninput="formatearInputMoneda(this)">
+                </div>
+            </div>
+            <button class="btn-primary" style="background-color: #555; margin-bottom: 10px;" onclick="agregarCampoBanco()">+ Agregar otro Banco</button>
+            <button class="btn-primary" onclick="registrarLibroSaldos()">Guardar Libro de Saldos</button>
+        </div>
+
+        <div class="card">
+            <h3>Registros y Comparación de Libros</h3>
+            <table>
+                <thead>
+                    <tr><th>Fecha</th><th>Momento</th><th>Total Saldos</th></tr>
+                </thead>
+                <tbody id="tablaSaldosBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 7. HISTORIAL -->
+    <div id="historial" class="tab-content">
+        <div class="card">
+            <h3>Historial General</h3>
+            <div class="form-group">
+                <label>Filtrar Historial:</label>
+                <select id="filtroHistorial" onchange="renderizarHistorial()">
+                    <option value="todos">Todos los movimientos</option>
+                    <option value="ingresos">Ingresos</option>
+                    <option value="combustible">Combustible</option>
+                    <option value="gastos">Gastos</option>
+                    <option value="deudas">Deudas y Pagos</option>
+                </select>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Fecha</th><th>Tipo</th><th>Detalle</th><th>Monto</th></tr>
+                </thead>
+                <tbody id="tablaHistorialBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Datos globales en LocalStorage
+    let db = JSON.parse(localStorage.getItem('mi_jornada_db')) || {
+        config: { nombre: '', desde: '', hasta: '', diasSemana: 6, combuDiario: 30000, gastoDiario: 5000 },
+        ingresos: [],
+        combustible: [],
+        gastos: [],
+        deudas: [],
+        pagos: [],
+        saldos: []
+    };
+
+    function guardarDB() {
+        localStorage.setItem('mi_jornada_db', JSON.stringify(db));
+        calcularResumenFinanciero();
+    }
+
+    function switchTab(evt, tabName) {
+        let contents = document.getElementsByClassName('tab-content');
+        for (let c of contents) c.classList.remove('active');
+        let buttons = document.getElementsByClassName('tab-btn');
+        for (let b of buttons) b.classList.remove('active');
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    // Formato de Moneda Chilena ($ y puntos)
+    function limpiarMoneda(valor) {
+        if (!valor) return 0;
+        return parseInt(valor.toString().replace(/\./g, '').replace('$', '').trim()) || 0;
+    }
+
+    function formatearNumero(num) {
+        return '$' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function formatearInputMoneda(input) {
+        let limpio = limpiarMoneda(input.value);
+        input.value = limpio > 0 ? limpio.toLocaleString('es-CL') : '';
+    }
+
+    // Configuración Inicial
+    function guardarConfigPeriodo() {
+        db.config.nombre = document.getElementById('nombrePeriodo').value;
+        db.config.desde = document.getElementById('periodoDesde').value;
+        db.config.hasta = document.getElementById('periodoHasta').value;
+        db.config.diasSemana = parseInt(document.getElementById('diasSemanaTrabajo').value) || 6;
+        db.config.combuDiario = limpiarMoneda(document.getElementById('combuDiario').value);
+        db.config.gastoDiario = limpiarMoneda(document.getElementById('gastoDiarioConfig').value);
+        guardarDB();
+    }
+
+    // Inicializar fechas con hoy por defecto
+    document.addEventListener("DOMContentLoaded", () => {
+        let hoy = new Date().toISOString().split('T')[0];
+        ['ingresoFecha', 'combuFecha', 'gastoFecha', 'deudaVenc', 'pagoFecha', 'saldoFecha'].forEach(id => {
+            let el = document.getElementById(id);
+            if(el && !el.value) el.value = hoy;
+        });
+
+        if(db.config.nombre) document.getElementById('nombrePeriodo').value = db.config.nombre;
+        if(db.config.desde) document.getElementById('periodoDesde').value = db.config.desde;
+        if(db.config.hasta) document.getElementById('periodoHasta').value = db.config.hasta;
+        if(db.config.diasSemana) document.getElementById('diasSemanaTrabajo').value = db.config.diasSemana;
+        if(db.config.combuDiario) document.getElementById('combuDiario').value = db.config.combuDiario.toLocaleString('es-CL');
+        if(db.config.gastoDiario) document.getElementById('gastoDiarioConfig').value = db.config.gastoDiario.toLocaleString('es-CL');
+
+        calcularResumenFinanciero();
+        renderizarIngresos();
+        renderizarCombustible();
+        renderizarGastos();
+        renderizarDeudas();
+        renderizarSaldos();
+        renderizarHistorial();
+    });
+
+    // Registrar Ingresos
+    function registrarIngreso() {
+        let ingreso = {
+            id: Date.now(),
+            fecha: document.getElementById('ingresoFecha').value,
+            origen: document.getElementById('ingresoOrigen').value,
+            monto: limpiarMoneda(document.getElementById('ingresoMonto').value)
+        };
+        if(ingreso.monto <= 0) { alert("Ingrese un monto válido"); return; }
+        db.ingresos.push(ingreso);
+        guardarDB();
+        document.getElementById('ingresoMonto').value = '';
+        renderizarIngresos();
+        renderizarHistorial();
+    }
+
+    function renderizarIngresos() {
+        let tbody = document.getElementById('tablaIngresosBody');
+        tbody.innerHTML = '';
+        db.ingresos.forEach(item => {
+            tbody.innerHTML += `<tr><td>${item.fecha}</td><td>${item.origen}</td><td>${formatearNumero(item.monto)}</td><td><button onclick="eliminarIngreso(${item.id})">❌</button></td></tr>`;
+        });
+    }
+
+    function eliminarIngreso(id) {
+        db.ingresos = db.ingresos.filter(i => i.id !== id);
+        guardarDB();
+        renderizarIngresos();
+        renderizarHistorial();
+    }
+
+    // Registrar Combustible y Rendimiento
+    function registrarCombustible() {
+        let carga = {
+            id: Date.now(),
+            fecha: document.getElementById('combuFecha').value,
+            monto: limpiarMoneda(document.getElementById('combuMonto').value),
+            odometro: parseInt(document.getElementById('combuOdometro').value) || 0
+        };
+        db.combustible.push(carga);
+        guardarDB();
+        document.getElementById('combuMonto').value = '0';
+        document.getElementById('combuOdometro').value = '';
+        renderizarCombustible();
+        renderizarHistorial();
+    }
+
+    function renderizarCombustible() {
+        let tbody = document.getElementById('tablaCombuBody');
+        tbody.innerHTML = '';
+        let cargasOrdenadas = [...db.combustible].sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+        for(let i=0; i<cargasOrdenadas.length; i++) {
+            let c = cargasOrdenadas[i];
+            let rendimiento = '-';
+            if(i > 0 && c.odometro > 0 && cargasOrdenadas[i-1].odometro > 0) {
+                let kmRecorridos = c.odometro - cargasOrdenadas[i-1].odometro;
+                let litrosEstimados = cargasOrdenadas[i-1].monto > 0 ? (cargasOrdenadas[i-1].monto / 1200) : 1; // Estimación base
+                if(litrosEstimados > 0 && kmRecorridos > 0) {
+                    rendimiento = (kmRecorridos / litrosEstimados).toFixed(1) + ' Km/L (approx)';
+                }
+            }
+            tbody.innerHTML += `<tr><td>${c.fecha}</td><td>${formatearNumero(c.monto)}</td><td>${c.odometro} Km</td><td>${rendimiento}</td></tr>`;
+        }
+    }
+
+    // Registrar Gastos
+    function registrarGasto() {
+        let gasto = {
+            id: Date.now(),
+            fecha: document.getElementById('gastoFecha').value,
+            categoria: document.getElementById('gastoCategoria').value,
+            monto: limpiarMoneda(document.getElementById('gastoMonto').value)
+        };
+        if(gasto.monto <= 0) { alert("Ingrese un monto válido"); return; }
+        db.gastos.push(gasto);
+        guardarDB();
+        document.getElementById('gastoMonto').value = '';
+        renderizarGastos();
+        renderizarHistorial();
+    }
+
+    function renderizarGastos() {
+        let tbody = document.getElementById('tablaGastosBody');
+        tbody.innerHTML = '';
+        db.gastos.forEach(item => {
+            tbody.innerHTML += `<tr><td>${item.fecha}</td><td>${item.categoria}</td><td>${formatearNumero(item.monto)}</td></tr>`;
+        });
+    }
+
+    // Deudas y Pagos
+    function toggleRecurrencia() {
+        let tipo = document.getElementById('deudaTipoPago').value;
+        document.getElementById('panelRecurrencia').style.display = tipo === 'Recurrente' ? 'block' : 'none';
+    }
+
+    function registrarDeuda() {
+        let deuda = {
+            id: Date.now(),
+            desc: document.getElementById('deudaDesc').value,
+            beneficiario: document.getElementById('deudaBeneficiario').value,
+            monto: limpiarMoneda(document.getElementById('deudaMonto').value),
+            vencimiento: document.getElementById('deudaVenc').value,
+            numCuotas: document.getElementById('deudaNumCuotas').value,
+            tipoPago: document.getElementById('deudaTipoPago').value,
+            estado: 'Pendiente'
+        };
+        db.deudas.push(deuda);
+        guardarDB();
+        renderizarDeudas();
+        renderizarHistorial();
+    }
+
+    function registrarPagoDeuda() {
+        let deudaId = document.getElementById('selectDeudasPagos').value;
+        let pago = {
+            id: Date.now(),
+            deudaId: deudaId,
+            fecha: document.getElementById('pagoFecha').value,
+            monto: limpiarMoneda(document.getElementById('pagoMonto').value)
+        };
+        db.pagos.push(pago);
+        let deuda = db.deudas.find(d => d.id == deudaId);
+        if(deuda) deuda.estado = 'Pagado';
+        guardarDB();
+        renderizarDeudas();
+        renderizarHistorial();
+    }
+
+    function renderizarDeudas() {
+        let tbody = document.getElementById('tablaDeudasBody');
+        let select = document.getElementById('selectDeudasPagos');
+        tbody.innerHTML = '';
+        select.innerHTML = '';
+        db.deudas.forEach(d => {
+            tbody.innerHTML += `<tr><td>${d.desc}</td><td>${d.beneficiario}</td><td>${formatearNumero(d.monto)}</td><td>${d.vencimiento}</td><td>${d.estado}</td></tr>`;
+            if(d.estado === 'Pendiente') {
+                select.innerHTML += `<option value="${d.id}">${d.desc} (${formatearNumero(d.monto)})</option>`;
+            }
+        });
+    }
+
+    // Libro de Saldos
+    function agregarCampoBanco() {
+        let container = document.getElementById('bancosContainer');
+        let div = document.createElement('div');
+        div.className = 'grid-2 form-group';
+        div.innerHTML = `<input type="text" placeholder="Nombre Banco" class="banco-nombre"><input type="text" placeholder="Monto ($)" class="banco-monto" value="0" oninput="formatearInputMoneda(this)">`;
+        container.appendChild(div);
+    }
+
+    function registrarLibroSaldos() {
+        let bancos = [];
+        let nombresBancos = document.querySelectorAll('.banco-nombre');
+        let montosBancos = document.querySelectorAll('.banco-monto');
+        for(let i=0; i<nombresBancos.length; i++) {
+            if(nombresBancos[i].value) {
+                bancos.push({ nombre: nombresBancos[i].value, monto: limpiarMoneda(montosBancos[i].value) });
+            }
+        }
+        let registro = {
+            id: Date.now(),
+            fecha: document.getElementById('saldoFecha').value,
+            momento: document.getElementById('saldoMomento').value,
+            uber: limpiarMoneda(document.getElementById('saldoUber').value),
+            didi: limpiarMoneda(document.getElementById('saldoDidi').value),
+            billetes: limpiarMoneda(document.getElementById('saldoBilletes').value),
+            monedas: limpiarMoneda(document.getElementById('saldoMonedas').value),
+            bancos: bancos
+        };
+        db.saldos.push(registro);
+        guardarDB();
+        renderizarSaldos();
+        renderizarHistorial();
+    }
+
+    function renderizarSaldos() {
+        let tbody = document.getElementById('tablaSaldosBody');
+        tbody.innerHTML = '';
+        db.saldos.forEach(s => {
+            let totalBancos = s.bancos.reduce((acc, b) => acc + b.monto, 0);
+            let totalGeneral = s.uber + s.didi + s.billetes + s.monedas + totalBancos;
+            tbody.innerHTML += `<tr><td>${s.fecha}</td><td>${s.momento}</td><td><strong>${formatearNumero(totalGeneral)}</strong></td></tr>`;
+        });
+    }
+
+    // Historial
+    function renderizarHistorial() {
+        let tbody = document.getElementById('tablaHistorialBody');
+        tbody.innerHTML = '';
+        let filtro = document.getElementById('filtroHistorial').value;
+
+        let movimientos = [];
+        if(filtro === 'todos' || filtro === 'ingresos') {
+            db.ingresos.forEach(i => movimientos.push({ fecha: i.fecha, tipo: 'Ingreso ('+i.origen+')', detalle: i.origen, monto: i.monto }));
+        }
+        if(filtro === 'todos' || filtro === 'combustible') {
+            db.combustible.forEach(c => movimientos.push({ fecha: c.fecha, tipo: 'Combustible', detalle: 'Carga odómetro: '+c.odometro, monto: c.monto }));
+        }
+        if(filtro === 'todos' || filtro === 'gastos') {
+            db.gastos.forEach(g => movimientos.push({ fecha: g.fecha, tipo: 'Gasto', detalle: g.categoria, monto: g.monto }));
+        }
+        if(filtro === 'todos' || filtro === 'deudas') {
+            db.deudas.forEach(d => movimientos.push({ fecha: d.vencimiento, tipo: 'Deuda', detalle: d.desc + ' ('+d.beneficiario+')', monto: d.monto }));
+        }
+
+        movimientos.sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
+        movimientos.forEach(m => {
+            tbody.innerHTML += `<tr><td>${m.fecha}</td><td>${m.tipo}</td><td>${m.detalle}</td><td>${formatearNumero(m.monto)}</td></tr>`;
+        });
+    }
+
+    // Cálculo Financiero General
+    function calcularResumenFinanciero() {
+        let totalIngresos = db.ingresos.reduce((acc, i) => acc + i.monto, 0);
+        let totalGastosReg = db.gastos.reduce((acc, g) => acc + g.monto, 0);
+        let totalCombustibleReg = db.combustible.reduce((acc, c) => acc + c.monto, 0);
+        let totalDeudasPend = db.deudas.filter(d => d.estado === 'Pendiente').reduce((acc, d) => acc + d.monto, 0);
+
+        let metaPeriodo = totalDeudasPend + (db.config.combuDiario * 30) + (db.config.gastoDiario * 30);
+        let faltaGenerar = Math.max(0, metaPeriodo - totalIngresos);
+        let prodDiaria = db.config.diasSemana > 0 ? Math.round(faltaGenerar / 30) : 0;
+
+        document.getElementById('lblMetaPeriodo').innerText = formatearNumero(metaPeriodo);
+        document.getElementById('lblProdDiaria').innerText = formatearNumero(prodDiaria);
+        document.getElementById('lblFaltaGenerar').innerText = formatearNumero(faltaGenerar);
+        document.getElementById('lblTotalIngresos').innerText = formatearNumero(totalIngresos);
+        document.getElementById('lblTotalGastosReg').innerText = formatearNumero(totalGastosReg);
+        document.getElementById('lblTotalCombustibleReg').innerText = formatearNumero(totalCombustibleReg);
+        document.getElementById('lblTotalDeudasPend').innerText = formatearNumero(totalDeudasPend);
+        document.getElementById('lblPresupGastosDisp').innerText = formatearNumero((db.config.gastoDiario * 30) - totalGastosReg);
+        document.getElementById('lblPresupCombuDisp').innerText = formatearNumero((db.config.combuDiario * 30) - totalCombustibleReg);
+    }
+</script>
+
+</body>
+</html>
