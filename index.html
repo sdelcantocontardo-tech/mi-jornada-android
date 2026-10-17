@@ -9,912 +9,1054 @@
 <style>
 :root {
   --azul:#123b60;
-  --azul2:#1c527d;
+  --azul2:#1d527c;
   --fondo:#f1f5f9;
   --blanco:#fff;
-  --texto:#172b3d;
-  --gris:#64748b;
-  --verde:#16804a;
+  --verde:#168653;
   --rojo:#c0392b;
   --borde:#dce4ec;
+  --texto:#203044;
 }
-* { box-sizing:border-box; }
+* {box-sizing:border-box}
 body {
   margin:0;
+  font-family:Arial,Helvetica,sans-serif;
   background:var(--fondo);
   color:var(--texto);
-  font-family:Arial,Helvetica,sans-serif;
-  font-size:15px;
 }
 header {
   background:var(--azul);
   color:white;
-  padding:17px 16px;
+  padding:18px 20px;
 }
-.header-inner { max-width:1100px; margin:auto; }
-header h1 { margin:0; font-size:26px; }
-header p { margin:5px 0 0; color:#d9e7f4; font-size:13px; }
-main { max-width:1100px; padding:14px; margin:auto; }
-.panel {
+.header-inner {
+  max-width:1150px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+header h1 {margin:0;font-size:25px}
+header p {margin:5px 0 0;font-size:13px;color:#d8e7f4}
+select,input,textarea,button {
+  font:inherit;
+}
+select,input,textarea {
+  width:100%;
+  padding:11px;
+  border:1px solid #cbd5e1;
+  border-radius:7px;
+  background:white;
+  color:var(--texto);
+  min-width:0;
+}
+input[type=checkbox] {width:auto}
+button {
+  cursor:pointer;
+  border:0;
+  border-radius:7px;
+  padding:11px 14px;
+  font-weight:600;
+  background:var(--azul);
+  color:white;
+}
+button:hover {filter:brightness(1.1)}
+button.secondary {background:#e2eaf2;color:var(--azul)}
+button.danger {background:#b93832}
+button.small {padding:6px 9px;font-size:12px}
+button.green {background:var(--verde)}
+nav {
+  background:white;
+  border-bottom:1px solid var(--borde);
+  padding:8px;
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+nav button {
+  white-space:nowrap;
+  background:#e8eef5;
+  color:var(--azul);
+}
+nav button.active {background:var(--azul);color:white}
+main {max-width:1150px;margin:20px auto;padding:0 15px 35px}
+.panel {display:none}
+.panel.active {display:block}
+h2 {font-size:22px;margin:0 0 16px}
+h3 {font-size:16px;margin:0 0 13px}
+.card {
   background:white;
   border:1px solid var(--borde);
   border-radius:12px;
-  padding:15px;
-  margin-bottom:14px;
-  min-width:0;
+  padding:17px;
+  margin-bottom:16px;
+  box-shadow:0 2px 6px #102a4308;
 }
-.profile-row {
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto auto;
-  gap:8px;
-  align-items:end;
-}
-label { display:block; font-weight:600; font-size:13px; margin-bottom:6px; }
-input,select,textarea,button {
-  font:inherit;
-}
-input,select,textarea {
-  width:100%;
-  min-width:0;
-  padding:11px;
-  border:1px solid #cbd5e1;
-  border-radius:8px;
-  background:white;
-  color:var(--texto);
-}
-input:focus,select:focus,textarea:focus {
-  outline:2px solid #9dc7eb;
-  border-color:var(--azul2);
-}
-button {
-  border:0;
-  border-radius:8px;
-  padding:11px 14px;
-  background:var(--azul);
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-}
-button:hover { filter:brightness(1.08); }
-button.secondary { background:#e6edf4; color:var(--azul); }
-button.danger { background:#a93226; }
-button.small { padding:7px 10px; font-size:12px; }
-button:disabled { opacity:.5; cursor:not-allowed; }
-.tabs {
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin:14px 0;
-}
-.tabs button {
-  background:#dfe8f1;
-  color:var(--azul);
-  flex:1 1 auto;
-}
-.tabs button.active { background:var(--azul); color:white; }
-.view { display:none; }
-.view.active { display:block; }
-h2 { font-size:21px; margin:0 0 14px; }
-h3 { font-size:16px; margin:0 0 12px; }
-.muted { color:var(--gris); font-size:13px; }
 .grid {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
-.grid.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
-.field { min-width:0; }
-.field.full { grid-column:1/-1; }
-.actions {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:13px;
-}
-.cards {
+.stats {
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:10px;
-  margin-bottom:14px;
+  gap:12px;
+  margin-bottom:16px;
 }
-.metric {
+.stat {
   background:white;
   border:1px solid var(--borde);
-  border-radius:11px;
-  padding:13px;
+  border-radius:10px;
+  padding:15px;
   min-width:0;
 }
-.metric .label { color:var(--gris); font-size:12px; font-weight:600; }
-.metric .value { font-size:21px; font-weight:700; margin-top:7px; overflow-wrap:anywhere; }
-.positive { color:var(--verde); }
-.negative { color:var(--rojo); }
-table { width:100%; border-collapse:collapse; font-size:13px; }
-th,td {
-  text-align:left;
-  padding:10px 7px;
-  border-bottom:1px solid var(--borde);
-  vertical-align:top;
-}
-th { color:var(--gris); font-size:12px; }
-.table-wrap { overflow-x:auto; }
-.empty { padding:18px; text-align:center; color:var(--gris); }
-.note {
-  background:#eef5fb;
-  border-radius:8px;
-  padding:11px;
-  font-size:13px;
-  line-height:1.5;
-  margin-bottom:12px;
-}
-hr { border:0; border-top:1px solid var(--borde); margin:15px 0; }
-.hidden { display:none !important; }
-footer { text-align:center; color:var(--gris); padding:18px; font-size:12px; }
-@media(max-width:650px) {
-  main { padding:9px; }
-  header h1 { font-size:23px; }
-  .grid,.grid.three { grid-template-columns:1fr; }
-  .cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .metric .value { font-size:18px; }
-  .profile-row { grid-template-columns:1fr 1fr; }
-  .profile-row .profile-select { grid-column:1/-1; }
-  .tabs button { flex:1 1 28%; padding:10px 7px; font-size:13px; }
+.stat span {display:block;font-size:12px;color:#64748b;margin-bottom:9px}
+.stat strong {font-size:clamp(16px,2vw,23px);overflow-wrap:anywhere}
+.field {display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label {font-size:13px;font-weight:600}
+.full {grid-column:1/-1}
+.actions {display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.muted {color:#64748b;font-size:13px}
+.good {color:var(--verde)}
+.bad {color:var(--rojo)}
+.table-wrap {overflow-x:auto}
+table {width:100%;border-collapse:collapse;font-size:13px}
+th,td {text-align:left;padding:10px 8px;border-bottom:1px solid #e5ebf1;vertical-align:middle}
+th {background:#f7f9fc;white-space:nowrap}
+td {overflow-wrap:anywhere}
+.empty {padding:18px;text-align:center;color:#64748b;font-size:14px}
+.notice {padding:12px;border-radius:8px;background:#edf4fb;font-size:13px;line-height:1.5}
+footer {text-align:center;color:#64748b;font-size:12px;padding:20px}
+.badge {display:inline-block;padding:4px 7px;border-radius:5px;font-size:11px;background:#e8eef5}
+.badge.paid {background:#d8f4e4;color:#176b42}
+.badge.unpaid {background:#fde5e3;color:#a32d25}
+hr {border:0;border-top:1px solid var(--borde);margin:17px 0}
+@media(max-width:700px) {
+  .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid {grid-template-columns:1fr}
+  .full {grid-column:auto}
+  header h1 {font-size:22px}
+  main {margin-top:14px;padding:0 10px 25px}
+  .card {padding:13px}
+  th,td {padding:8px 6px}
 }
 </style>
 </head>
 <body>
+
 <header>
   <div class="header-inner">
-    <h1>Mi Jornada</h1>
-    <p>Control de ingresos, combustible, gastos, saldos y metas</p>
+    <div>
+      <h1>Mi Jornada</h1>
+      <p>Control de ingresos, compromisos y rendimiento laboral</p>
+    </div>
+    <div style="min-width:190px">
+      <label for="perfilActivo" style="font-size:12px">Perfil de trabajo</label>
+      <select id="perfilActivo" aria-label="Perfil activo"></select>
+    </div>
   </div>
 </header>
 
+<nav id="navegacion">
+  <button class="active" data-tab="inicio">Resumen</button>
+  <button data-tab="jornadas">Jornadas</button>
+  <button data-tab="cuentas">Cuentas y cuotas</button>
+  <button data-tab="combustible">Combustible</button>
+  <button data-tab="libro">Libro de saldos</button>
+  <button data-tab="configuracion">Configuración</button>
+</nav>
+
 <main>
-  <section class="panel">
-    <div class="profile-row">
-      <div class="profile-select">
-        <label for="profileSelect">Perfil de trabajo</label>
-        <select id="profileSelect"></select>
+
+<section id="inicio" class="panel active">
+  <h2>Resumen financiero</h2>
+  <div class="card">
+    <div class="grid">
+      <div class="field">
+        <label for="mesResumen">Mes que deseas revisar</label>
+        <input type="month" id="mesResumen">
       </div>
-      <button type="button" id="newProfileBtn">+ Perfil</button>
-      <button type="button" id="deleteProfileBtn" class="danger">Eliminar</button>
+      <div class="field">
+        <label for="metaPersonal">Meta de ganancia personal mensual ($)</label>
+        <input type="number" id="metaPersonal" min="0" step="1000" value="500000">
+      </div>
     </div>
-    <div id="profileMessage" class="muted" style="margin-top:8px">
-      Los datos de cada perfil se guardan por separado en este navegador.
+    <div class="actions">
+      <button id="guardarMeta">Guardar meta</button>
     </div>
-  </section>
+  </div>
+  <div class="stats">
+    <div class="stat"><span>Ingresos registrados</span><strong id="sIngresos">$0</strong></div>
+    <div class="stat"><span>Gastos de trabajo</span><strong id="sGastos">$0</strong></div>
+    <div class="stat"><span>Cuotas del mes</span><strong id="sCuentas">$0</strong></div>
+    <div class="stat"><span>Saldo estimado</span><strong id="sSaldo">$0</strong></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><span>Meta personal</span><strong id="sMeta">$0</strong></div>
+    <div class="stat"><span>Dinero pendiente para la meta</span><strong id="sFalta">$0</strong></div>
+    <div class="stat"><span>Días trabajados</span><strong id="sDias">0</strong></div>
+    <div class="stat"><span>Promedio por jornada</span><strong id="sPromedio">$0</strong></div>
+  </div>
+  <div class="card">
+    <h3>¿Estás generando lo suficiente?</h3>
+    <p id="diagnostico" class="notice">Registra tus jornadas, gastos y compromisos para calcular tu situación.</p>
+    <div class="grid" style="margin-top:14px">
+      <div>
+        <span class="muted">Generación diaria requerida</span>
+        <h3 id="diarioRequerido">$0</h3>
+      </div>
+      <div>
+        <span class="muted">Combustible registrado en el mes</span>
+        <h3 id="combustibleMes">$0</h3>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <nav class="tabs" aria-label="Secciones de Mi Jornada">
-    <button type="button" class="active" data-tab="inicio">Inicio</button>
-    <button type="button" data-tab="ingresos">Ingresos</button>
-    <button type="button" data-tab="combustible">Combustible</button>
-    <button type="button" data-tab="gastos">Gastos diarios</button>
-    <button type="button" data-tab="libro">Libro</button>
-    <button type="button" data-tab="historial">Historial</button>
-    <button type="button" data-tab="configuracion">Configuración</button>
-  </nav>
-
-  <section id="inicio" class="view active">
-    <h2>Resumen de tu jornada</h2>
-    <section class="panel">
-      <h3>Período que deseas revisar</h3>
+<section id="jornadas" class="panel">
+  <h2>Registro de jornadas e ingresos</h2>
+  <div class="card">
+    <h3>Registrar una jornada</h3>
+    <form id="formJornada">
       <div class="grid">
         <div class="field">
-          <label for="periodFrom">Desde</label>
-          <input id="periodFrom" type="date">
+          <label for="jFecha">Fecha de trabajo</label>
+          <input type="date" id="jFecha" required>
         </div>
         <div class="field">
-          <label for="periodTo">Hasta</label>
-          <input id="periodTo" type="date">
-        </div>
-      </div>
-      <div class="actions">
-        <button type="button" id="applyPeriod">Consultar período</button>
-        <button type="button" id="currentMonth" class="secondary">Mes actual</button>
-      </div>
-      <p class="muted">El período afecta los totales que aparecen en este resumen.</p>
-    </section>
-
-    <div class="cards">
-      <div class="metric"><div class="label">Ingresos registrados</div><div class="value" id="sumIncome">$0</div></div>
-      <div class="metric"><div class="label">Combustible</div><div class="value" id="sumFuel">$0</div></div>
-      <div class="metric"><div class="label">Otros gastos</div><div class="value" id="sumExpenses">$0</div></div>
-      <div class="metric"><div class="label">Resultado del período</div><div class="value" id="sumResult">$0</div></div>
-    </div>
-
-    <section class="panel">
-      <h3>¿Estás cumpliendo tu meta?</h3>
-      <div class="grid">
-        <div><div class="muted">Meta diaria configurada</div><h2 id="dailyGoalDisplay">$0</h2></div>
-        <div><div class="muted">Meta acumulada del período</div><h2 id="periodGoalDisplay">$0</h2></div>
-        <div><div class="muted">Días trabajados registrados</div><h2 id="daysWorkedDisplay">0</h2></div>
-        <div><div class="muted">Resultado frente a la meta</div><h2 id="goalDifference">$0</h2></div>
-      </div>
-      <div id="goalMessage" class="note">Configura tu meta diaria para comenzar.</div>
-    </section>
-
-    <section class="panel">
-      <h3>Combustible del período</h3>
-      <div class="grid three">
-        <div><div class="muted">Litros registrados</div><h3 id="sumLiters">0 L</h3></div>
-        <div><div class="muted">Precio promedio por litro</div><h3 id="avgFuelPrice">$0</h3></div>
-        <div><div class="muted">Costo promedio por jornada registrada</div><h3 id="avgFuelDay">$0</h3></div>
-      </div>
-      <p class="muted">Los gastos se cuentan por su fecha de registro. No se inventan cargas en días sin combustible.</p>
-    </section>
-  </section>
-
-  <section id="ingresos" class="view">
-    <h2>Registrar ingresos</h2>
-    <section class="panel">
-      <form id="incomeForm">
-        <div class="grid">
-          <div class="field">
-            <label for="incomeDate">Fecha</label>
-            <input id="incomeDate" type="date" required>
-          </div>
-          <div class="field">
-            <label for="incomePlatform">Plataforma o tipo de ingreso</label>
-            <select id="incomePlatform">
-              <option>Uber</option>
-              <option>DiDi</option>
-              <option>Otra aplicación</option>
-              <option>Otro ingreso</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="incomeAmount">Ingreso del día ($)</label>
-            <input id="incomeAmount" type="number" min="0" step="1" placeholder="Ej. 85000" required>
-          </div>
-          <div class="field">
-            <label for="incomeHours">Horas trabajadas (opcional)</label>
-            <input id="incomeHours" type="number" min="0" step="0.25" placeholder="Ej. 8">
-          </div>
-          <div class="field full">
-            <label for="incomeNote">Observación (opcional)</label>
-            <input id="incomeNote" type="text" maxlength="160" placeholder="Detalle del ingreso">
-          </div>
-        </div>
-        <div class="actions">
-          <button type="submit">Guardar ingreso</button>
-          <button type="reset" class="secondary">Limpiar</button>
-        </div>
-      </form>
-    </section>
-    <section class="panel">
-      <h3>Ingresos registrados</h3>
-      <div id="incomeList"></div>
-    </section>
-  </section>
-
-  <section id="combustible" class="view">
-    <h2>Control de combustible</h2>
-    <section class="panel">
-      <div class="note">Registra cada carga. Si ingresas litros y precio por litro, el sistema calcula el costo. También puedes registrar el costo total directamente. No registres una carga cuando no hayas cargado combustible.</div>
-      <form id="fuelForm">
-        <div class="grid">
-          <div class="field">
-            <label for="fuelDate">Fecha de carga</label>
-            <input id="fuelDate" type="date" required>
-          </div>
-          <div class="field">
-            <label for="fuelStation">Estación o descripción</label>
-            <input id="fuelStation" type="text" maxlength="100" placeholder="Ej. Copec">
-          </div>
-          <div class="field">
-            <label for="fuelLiters">Litros</label>
-            <input id="fuelLiters" type="number" min="0" step="0.01" placeholder="Ej. 25">
-          </div>
-          <div class="field">
-            <label for="fuelPrice">Precio por litro ($)</label>
-            <input id="fuelPrice" type="number" min="0" step="1" placeholder="Ej. 1300">
-          </div>
-          <div class="field full">
-            <label for="fuelAmount">Costo total de la carga ($)</label>
-            <input id="fuelAmount" type="number" min="0" step="1" placeholder="Se calcula si ingresas litros y precio">
-          </div>
-        </div>
-        <div class="actions">
-          <button type="submit">Guardar carga</button>
-          <button type="reset" class="secondary">Limpiar</button>
-        </div>
-      </form>
-    </section>
-    <section class="panel">
-      <h3>Historial de combustible</h3>
-      <div id="fuelList"></div>
-    </section>
-  </section>
-
-  <section id="gastos" class="view">
-    <h2>Gastos diarios</h2>
-    <section class="panel">
-      <form id="expenseForm">
-        <div class="grid">
-          <div class="field">
-            <label for="expenseDate">Fecha</label>
-            <input id="expenseDate" type="date" required>
-          </div>
-          <div class="field">
-            <label for="expenseCategory">Categoría</label>
-            <select id="expenseCategory">
-              <option>Arriendo de vehículo</option>
-              <option>Peajes</option>
-              <option>Estacionamiento</option>
-              <option>Alimentación</option>
-              <option>Mantención del vehículo</option>
-              <option>Lavado</option>
-              <option>Comisión de aplicación</option>
-              <option>Otro gasto</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="expenseAmount">Monto ($)</label>
-            <input id="expenseAmount" type="number" min="1" step="1" required placeholder="Ej. 12000">
-          </div>
-          <div class="field">
-            <label for="expenseNote">Detalle</label>
-            <input id="expenseNote" type="text" maxlength="160" placeholder="Descripción del gasto">
-          </div>
-        </div>
-        <div class="actions">
-          <button type="submit">Guardar gasto</button>
-          <button type="reset" class="secondary">Limpiar</button>
-        </div>
-      </form>
-    </section>
-    <section class="panel">
-      <h3>Gastos registrados</h3>
-      <div id="expenseList"></div>
-    </section>
-  </section>
-
-  <section id="libro" class="view">
-    <h2>Libro de saldos</h2>
-    <section class="panel">
-      <div class="note">Registra el saldo que tienes en cada cuenta o forma de pago en una fecha determinada. Por ejemplo, Santander, Mercado Pago, efectivo en billetes, monedas, Uber o DiDi. Son fotografías de tus saldos: no se suman a tus ingresos para evitar duplicar dinero.</div>
-      <form id="bookForm">
-        <div class="grid">
-          <div class="field">
-            <label for="bookDate">Fecha del saldo</label>
-            <input id="bookDate" type="date" required>
-          </div>
-          <div class="field">
-            <label for="bookAccount">Cuenta o fondo</label>
-            <input id="bookAccount" list="accountOptions" maxlength="80" required placeholder="Ej. Santander">
-            <datalist id="accountOptions">
-              <option value="Santander"></option>
-              <option value="Mercado Pago"></option>
-              <option value="Efectivo billetes"></option>
-              <option value="Efectivo monedas"></option>
-              <option value="Uber"></option>
-              <option value="DiDi"></option>
-            </datalist>
-          </div>
-          <div class="field">
-            <label for="bookBalance">Saldo disponible ($)</label>
-            <input id="bookBalance" type="number" min="0" step="1" required placeholder="Ej. 150000">
-          </div>
-          <div class="field">
-            <label for="bookNote">Observación (opcional)</label>
-            <input id="bookNote" type="text" maxlength="160" placeholder="Detalle">
-          </div>
-        </div>
-        <div class="actions">
-          <button type="submit">Guardar saldo</button>
-          <button type="reset" class="secondary">Limpiar</button>
-        </div>
-      </form>
-    </section>
-    <section class="panel">
-      <h3>Últimos saldos registrados por cuenta</h3>
-      <div id="bookCurrent"></div>
-      <hr>
-      <h3>Movimientos del libro</h3>
-      <div id="bookList"></div>
-    </section>
-  </section>
-
-  <section id="historial" class="view">
-    <h2>Historial de movimientos</h2>
-    <section class="panel">
-      <div class="grid">
-        <div class="field">
-          <label for="historyFrom">Desde</label>
-          <input id="historyFrom" type="date">
-        </div>
-        <div class="field">
-          <label for="historyTo">Hasta</label>
-          <input id="historyTo" type="date">
-        </div>
-        <div class="field full">
-          <label for="historyType">Tipo de registro</label>
-          <select id="historyType">
-            <option value="todos">Todos los movimientos</option>
-            <option value="ingreso">Ingresos</option>
-            <option value="combustible">Combustible</option>
-            <option value="gasto">Gastos diarios</option>
-            <option value="libro">Saldos del libro</option>
+          <label for="jPlataforma">Plataforma o tipo de ingreso</label>
+          <select id="jPlataforma">
+            <option>Uber</option>
+            <option>DiDi</option>
+            <option>Otra aplicación</option>
+            <option>Otro ingreso</option>
           </select>
         </div>
+        <div class="field">
+          <label for="jIngreso">Ganancia del día ($)</label>
+          <input type="number" id="jIngreso" min="0" step="1" required>
+        </div>
+        <div class="field">
+          <label for="jHoras">Horas trabajadas</label>
+          <input type="number" id="jHoras" min="0" step="0.25" placeholder="Opcional">
+        </div>
+        <div class="field">
+          <label for="jKm">Kilómetros recorridos</label>
+          <input type="number" id="jKm" min="0" step="0.1" placeholder="Opcional">
+        </div>
+        <div class="field">
+          <label for="jEfectivo">Efectivo recibido ($)</label>
+          <input type="number" id="jEfectivo" min="0" step="1" value="0">
+        </div>
+        <div class="field">
+          <label for="jTarjeta">Pagos con tarjeta ($)</label>
+          <input type="number" id="jTarjeta" min="0" step="1" value="0">
+        </div>
+        <div class="field">
+          <label for="jSaldoApp">Saldo disponible en la aplicación ($)</label>
+          <input type="number" id="jSaldoApp" min="0" step="1" placeholder="Opcional">
+        </div>
+        <div class="field full">
+          <label for="jNota">Observaciones</label>
+          <input id="jNota" maxlength="200" placeholder="Opcional">
+        </div>
       </div>
+      <p class="muted">La ganancia del día es el ingreso principal para los cálculos. Efectivo, tarjetas y saldo de la aplicación son un desglose informativo y no se suman nuevamente.</p>
       <div class="actions">
-        <button type="button" id="filterHistory">Filtrar historial</button>
+        <button type="submit" id="guardarJornada">Guardar jornada</button>
+        <button type="button" class="secondary" id="cancelarJornada" hidden>Cancelar edición</button>
       </div>
-    </section>
-    <section class="panel">
-      <div id="historyList"></div>
-    </section>
-  </section>
+    </form>
+  </div>
+  <div class="card">
+    <div class="grid">
+      <div class="field">
+        <label for="filtroJornada">Filtrar por mes</label>
+        <input type="month" id="filtroJornada">
+      </div>
+      <div class="field">
+        <label for="filtroPlataforma">Filtrar plataforma</label>
+        <select id="filtroPlataforma">
+          <option value="">Todas</option>
+          <option>Uber</option><option>DiDi</option>
+          <option>Otra aplicación</option><option>Otro ingreso</option>
+        </select>
+      </div>
+    </div>
+    <hr>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Plataforma</th><th>Ingreso</th><th>Horas</th><th>$/hora</th><th>Km</th><th>Acciones</th></tr></thead>
+        <tbody id="tablaJornadas"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
-  <section id="configuracion" class="view">
-    <h2>Configuración del perfil</h2>
-    <section class="panel">
-      <form id="settingsForm">
-        <div class="grid">
-          <div class="field">
-            <label for="dailyGoal">Meta diaria de ingresos ($)</label>
-            <input id="dailyGoal" type="number" min="0" step="1" required>
-          </div>
-          <div class="field">
-            <label for="workDays">Días de trabajo previstos por semana</label>
-            <input id="workDays" type="number" min="1" max="7" step="1" required>
-          </div>
-          <div class="field">
-            <label for="periodStartDay">Día de inicio del período mensual</label>
-            <input id="periodStartDay" type="number" min="1" max="28" step="1" required>
-          </div>
-          <div class="field">
-            <label for="monthlyCommitments">Compromisos mensuales ($)</label>
-            <input id="monthlyCommitments" type="number" min="0" step="1" required>
-          </div>
+<section id="cuentas" class="panel">
+  <h2>Cuentas, deudas y compromisos</h2>
+  <div class="card">
+    <h3>Registrar cuenta o compromiso</h3>
+    <form id="formCuenta">
+      <div class="grid">
+        <div class="field">
+          <label for="cDescripcion">Descripción de la cuenta</label>
+          <input id="cDescripcion" required maxlength="120" placeholder="Ej.: Crédito de consumo">
         </div>
-        <div class="actions">
-          <button type="submit">Guardar configuración</button>
+        <div class="field">
+          <label for="cBeneficiario">Beneficiario o entidad</label>
+          <input id="cBeneficiario" maxlength="120" placeholder="Ej.: Banco">
         </div>
-      </form>
-    </section>
-    <section class="panel">
-      <h3>Respaldo de datos</h3>
-      <p class="muted">Puedes exportar los datos de este perfil a un archivo JSON para guardarlos. Para recuperar un respaldo, selecciona el archivo que exportaste anteriormente.</p>
-      <div class="actions">
-        <button type="button" id="exportBtn">Exportar respaldo</button>
-        <button type="button" id="importBtn" class="secondary">Importar respaldo</button>
-        <input id="importFile" type="file" accept=".json,application/json" class="hidden">
+        <div class="field">
+          <label for="cTipo">Tipo de cuenta</label>
+          <select id="cTipo">
+            <option value="unica">Pago por una sola vez</option>
+            <option value="cuotas">Deuda con cuotas</option>
+            <option value="recurrente">Cuenta recurrente</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cMonto">Monto de cada pago ($)</label>
+          <input type="number" id="cMonto" min="1" step="1" required>
+        </div>
+        <div class="field">
+          <label for="cPrimeraFecha">Fecha del primer vencimiento</label>
+          <input type="date" id="cPrimeraFecha" required>
+        </div>
+        <div class="field" id="grupoCuotas">
+          <label for="cNumeroCuotas">Número total de cuotas</label>
+          <input type="number" id="cNumeroCuotas" min="1" step="1" value="1">
+        </div>
+        <div class="field" id="grupoFrecuencia" hidden>
+          <label for="cFrecuencia">Frecuencia de repetición</label>
+          <select id="cFrecuencia">
+            <option value="mensual">Mensual</option>
+            <option value="semanal">Semanal</option>
+            <option value="anual">Anual</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="cNota">Observaciones (opcional)</label>
+          <input id="cNota" maxlength="200">
+        </div>
       </div>
-    </section>
-  </section>
+      <p class="muted">Las deudas generan sus cuotas automáticamente. Las cuentas recurrentes generan vencimientos según la frecuencia elegida. Los pagos se pueden marcar como pagados.</p>
+      <div class="actions">
+        <button type="submit" id="guardarCuenta">Guardar cuenta</button>
+        <button type="button" class="secondary" id="cancelarCuenta" hidden>Cancelar edición</button>
+      </div>
+    </form>
+  </div>
+  <div class="card">
+    <h3>Cuentas registradas</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Descripción</th><th>Beneficiario</th><th>Tipo</th><th>Monto</th><th>Vencimientos</th><th>Acciones</th></tr></thead>
+        <tbody id="tablaCuentas"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Vencimientos y pagos</h3>
+    <div class="grid">
+      <div class="field">
+        <label for="filtroCuentas">Mes de vencimiento</label>
+        <input type="month" id="filtroCuentas">
+      </div>
+      <div class="field">
+        <label for="filtroEstadoCuenta">Estado</label>
+        <select id="filtroEstadoCuenta">
+          <option value="">Todos</option>
+          <option value="pendiente">Pendientes</option>
+          <option value="pagado">Pagados</option>
+        </select>
+      </div>
+    </div>
+    <hr>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Vencimiento</th><th>Cuenta</th><th>Beneficiario</th><th>Monto</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="tablaVencimientos"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="combustible" class="panel">
+  <h2>Control de combustible y rendimiento</h2>
+  <div class="card">
+    <h3>Registrar carga de combustible</h3>
+    <form id="formCombustible">
+      <div class="grid">
+        <div class="field">
+          <label for="bFecha">Fecha de carga</label>
+          <input type="date" id="bFecha" required>
+        </div>
+        <div class="field">
+          <label for="bLitros">Litros cargados</label>
+          <input type="number" id="bLitros" min="0.01" step="0.01" required>
+        </div>
+        <div class="field">
+          <label for="bPrecio">Precio por litro ($)</label>
+          <input type="number" id="bPrecio" min="1" step="0.1" required>
+        </div>
+        <div class="field">
+          <label for="bKm">Kilometraje del vehículo (opcional)</label>
+          <input type="number" id="bKm" min="0" step="0.1">
+        </div>
+        <div class="field full">
+          <label for="bNota">Observaciones</label>
+          <input id="bNota" maxlength="200">
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit">Guardar carga</button>
+      </div>
+    </form>
+  </div>
+  <div class="stats">
+    <div class="stat"><span>Litros registrados</span><strong id="bTotalLitros">0</strong></div>
+    <div class="stat"><span>Costo registrado</span><strong id="bTotalCosto">$0</strong></div>
+    <div class="stat"><span>Precio promedio por litro</span><strong id="bPromPrecio">$0</strong></div>
+    <div class="stat"><span>Rendimiento entre cargas con km</span><strong id="bRendimiento">—</strong></div>
+  </div>
+  <div class="card">
+    <h3>Período de análisis</h3>
+    <div class="grid">
+      <div class="field">
+        <label for="bDesde">Desde</label>
+        <input type="date" id="bDesde">
+      </div>
+      <div class="field">
+        <label for="bHasta">Hasta</label>
+        <input type="date" id="bHasta">
+      </div>
+    </div>
+    <div class="actions"><button id="analizarCombustible">Actualizar período</button></div>
+    <p id="resumenCombustible" class="notice">Selecciona un período para ver los resultados.</p>
+    <p class="muted">El rendimiento en km/l se calcula solamente cuando existen registros con kilometrajes consecutivos válidos. Si cargas litros sin registrar el kilometraje, no se inventa un rendimiento.</p>
+  </div>
+  <div class="card">
+    <h3>Historial de cargas</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Litros</th><th>Precio/litro</th><th>Costo</th><th>Kilometraje</th><th>Acciones</th></tr></thead>
+        <tbody id="tablaCombustible"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="libro" class="panel">
+  <h2>Libro de saldos y ahorros</h2>
+  <div class="card">
+    <h3>Registrar saldos de tus cuentas y efectivo</h3>
+    <form id="formLibro">
+      <div class="grid">
+        <div class="field">
+          <label for="lFecha">Fecha del registro</label>
+          <input type="date" id="lFecha" required>
+        </div>
+        <div class="field">
+          <label for="lCuenta">Cuenta o medio de dinero</label>
+          <input id="lCuenta" required maxlength="100" placeholder="Ej.: Santander, Mercado Pago">
+        </div>
+        <div class="field">
+          <label for="lMonto">Saldo ($)</label>
+          <input type="number" id="lMonto" min="0" step="1" required>
+        </div>
+        <div class="field">
+          <label for="lTipo">Tipo</label>
+          <select id="lTipo">
+            <option>Cuenta bancaria</option>
+            <option>Billetera digital</option>
+            <option>Efectivo en billetes</option>
+            <option>Efectivo en monedas</option>
+            <option>Saldo Uber</option>
+            <option>Saldo DiDi</option>
+            <option>Ahorro</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="lNota">Observaciones</label>
+          <input id="lNota" maxlength="200">
+        </div>
+      </div>
+      <div class="actions"><button type="submit">Guardar saldo</button></div>
+    </form>
+  </div>
+  <div class="stats">
+    <div class="stat"><span>Total de saldos registrados en la fecha</span><strong id="lTotal">$0</strong></div>
+    <div class="stat"><span>Saldo en cuentas bancarias</span><strong id="lBancos">$0</strong></div>
+    <div class="stat"><span>Efectivo registrado</span><strong id="lEfectivo">$0</strong></div>
+    <div class="stat"><span>Ahorros registrados</span><strong id="lAhorros">$0</strong></div>
+  </div>
+  <div class="card">
+    <div class="field">
+      <label for="lFiltroFecha">Fecha cuyos saldos deseas consultar</label>
+      <input type="date" id="lFiltroFecha">
+    </div>
+    <hr>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Cuenta</th><th>Tipo</th><th>Saldo</th><th>Acciones</th></tr></thead>
+        <tbody id="tablaLibro"></tbody>
+      </table>
+    </div>
+    <p class="muted">El libro registra saldos declarados. No suma estos saldos a las ganancias de las jornadas, evitando duplicar ingresos.</p>
+  </div>
+  <div class="card">
+    <h3>Registro de dinero destinado a ahorro</h3>
+    <form id="formAhorro">
+      <div class="grid">
+        <div class="field">
+          <label for="aFecha">Fecha</label>
+          <input type="date" id="aFecha" required>
+        </div>
+        <div class="field">
+          <label for="aMonto">Monto ahorrado ($)</label>
+          <input type="number" id="aMonto" min="1" step="1" required>
+        </div>
+        <div class="field full">
+          <label for="aNota">Objetivo o descripción</label>
+          <input id="aNota" required maxlength="150" placeholder="Ej.: Fondo para pagar una deuda">
+        </div>
+      </div>
+      <div class="actions"><button type="submit">Registrar ahorro</button></div>
+    </form>
+    <hr>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fecha</th><th>Objetivo</th><th>Monto</th><th>Acciones</th></tr></thead>
+        <tbody id="tablaAhorros"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="configuracion" class="panel">
+  <h2>Configuración y perfiles</h2>
+  <div class="card">
+    <h3>Crear un perfil de trabajo</h3>
+    <form id="formPerfil">
+      <div class="grid">
+        <div class="field">
+          <label for="pNombre">Nombre del perfil</label>
+          <input id="pNombre" required maxlength="60" placeholder="Ej.: Mi actividad principal">
+        </div>
+        <div class="field">
+          <label for="pDias">Días estimados de trabajo al mes</label>
+          <input id="pDias" type="number" min="1" max="31" value="26" required>
+        </div>
+      </div>
+      <div class="actions"><button type="submit">Crear perfil</button></div>
+    </form>
+    <p class="muted">Cada perfil mantiene sus propios registros. Cambiar de perfil cambia los datos mostrados.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Perfil</th><th>Días mensuales estimados</th><th>Acciones</th></tr></thead>
+        <tbody id="tablaPerfiles"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Período de trabajo</h3>
+    <p class="muted">Puedes definir el período que utilizas para ordenar tus ingresos y compromisos. El resumen mensual utiliza meses calendario.</p>
+    <div class="grid">
+      <div class="field">
+        <label for="periodoInicio">Día de inicio del período</label>
+        <input id="periodoInicio" type="number" min="1" max="28" value="1">
+      </div>
+      <div class="field">
+        <label for="periodoFin">Día de término del período</label>
+        <input id="periodoFin" type="number" min="1" max="31" value="31">
+      </div>
+    </div>
+    <div class="actions"><button id="guardarPeriodo">Guardar período</button></div>
+  </div>
+  <div class="card">
+    <h3>Respaldo de tus datos</h3>
+    <p class="muted">Los datos se guardan en el almacenamiento local de este navegador y dispositivo. Exporta un respaldo periódicamente.</p>
+    <div class="actions">
+      <button id="exportar">Descargar respaldo JSON</button>
+      <button id="importarBtn" class="secondary">Restaurar respaldo JSON</button>
+      <input type="file" id="importarArchivo" accept=".json,application/json" hidden>
+    </div>
+    <hr>
+    <button id="borrarDatos" class="danger">Borrar todos los datos de la aplicación</button>
+  </div>
+</section>
+
 </main>
-
-<footer>Mi Jornada · Los datos se guardan en este navegador. Exporta respaldos periódicamente.</footer>
+<footer>Mi Jornada · Control personal de ingresos y gastos</footer>
 
 <script>
+(function(){
 "use strict";
 
-const STORAGE_KEY = "miJornadaLocal_v1";
 const $ = id => document.getElementById(id);
-
-function todayISO() {
+const hoy = () => {
   const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-}
-function money(n) {
-  return new Intl.NumberFormat("es-CL", {
-    style:"currency", currency:"CLP", maximumFractionDigits:0
-  }).format(Number(n)||0);
-}
-function number(n) {
-  return new Intl.NumberFormat("es-CL",{maximumFractionDigits:2}).format(Number(n)||0);
-}
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
-}
-function esc(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
-}
-function newProfile(name) {
-  return {
-    id:uid(),
-    name:name || "Mi perfil",
-    settings:{
-      dailyGoal:0, workDays:6, periodStartDay:1, monthlyCommitments:0
-    },
-    incomes:[], fuels:[], expenses:[], books:[]
-  };
-}
-function loadData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && Array.isArray(parsed.profiles) && parsed.profiles.length) {
-        parsed.profiles.forEach(p => {
-          p.settings ||= {};
-          p.settings.dailyGoal ??= 0;
-          p.settings.workDays ??= 6;
-          p.settings.periodStartDay ??= 1;
-          p.settings.monthlyCommitments ??= 0;
-          p.incomes ||= [];
-          p.fuels ||= [];
-          p.expenses ||= [];
-          p.books ||= [];
-        });
-        if (!parsed.profiles.some(p => p.id === parsed.activeId)) {
-          parsed.activeId = parsed.profiles[0].id;
-        }
-        return parsed;
-      }
-    }
-  } catch (e) {
-    console.error("No se pudieron leer los datos guardados",e);
-  }
-  const p = newProfile("Mi perfil");
-  return {profiles:[p],activeId:p.id};
-}
-let app = loadData();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+};
+const mesActual = () => hoy().slice(0,7);
+const pesos = n => "$"+Math.round(Number(n)||0).toLocaleString("es-CL");
+const numero = id => Math.max(0,Number($(id).value)||0);
+const texto = id => $(id).value.trim();
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const escapeHTML = value => String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fechaValida = s => /^\d{4}-\d{2}-\d{2}$/.test(s||"");
+const sumarMeses = (fecha, cantidad) => {
+  const [y,m,d]=fecha.split("-").map(Number);
+  const base=new Date(y,m-1+cantidad,1);
+  const ultimo=new Date(base.getFullYear(),base.getMonth()+1,0).getDate();
+  return base.getFullYear()+"-"+String(base.getMonth()+1).padStart(2,"0")+"-"+String(Math.min(d,ultimo)).padStart(2,"0");
+};
+const sumarDias = (fecha,cantidad) => {
+  const d=new Date(fecha+"T12:00:00");
+  d.setDate(d.getDate()+cantidad);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+};
+const inicioMes = m => m+"-01";
+const finMes = m => {
+  const [y,mo]=m.split("-").map(Number);
+  return y+"-"+String(mo).padStart(2,"0")+"-"+new Date(y,mo,0).getDate();
+};
+const porFecha = (a,b) => a.fecha.localeCompare(b.fecha);
+const datosIniciales = () => ({
+  version:1,
+  perfilActivo:"principal",
+  perfiles:[{id:"principal",nombre:"Principal",dias:26}],
+  datos:{principal:{
+    jornadas:[],cuentas:[],combustibles:[],libro:[],ahorros:[],
+    meta:500000,periodoInicio:1,periodoFin:31
+  }}
+});
+let estado;
+try {
+  estado=JSON.parse(localStorage.getItem("miJornadaDatos")||"null");
+} catch(e) { estado=null; }
+if(!estado || !Array.isArray(estado.perfiles) || !estado.datos) estado=datosIniciales();
 
-function saveData() {
+function normalizar(){
+  if(!estado.perfiles.length) estado.perfiles=[{id:"principal",nombre:"Principal",dias:26}];
+  estado.perfiles.forEach(p=>{
+    if(!estado.datos[p.id]) estado.datos[p.id]={jornadas:[],cuentas:[],combustibles:[],libro:[],ahorros:[],meta:500000,periodoInicio:1,periodoFin:31};
+    const d=estado.datos[p.id];
+    ["jornadas","cuentas","combustibles","libro","ahorros"].forEach(k=>{if(!Array.isArray(d[k]))d[k]=[];});
+    if(!Number.isFinite(Number(d.meta)))d.meta=500000;
+  });
+  if(!estado.perfiles.some(p=>p.id===estado.perfilActivo))estado.perfilActivo=estado.perfiles[0].id;
+}
+normalizar();
+
+function guardar(){
   try {
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(app));
-    $("profileMessage").textContent =
-      "Datos guardados en este navegador · " + new Date().toLocaleTimeString("es-CL");
+    localStorage.setItem("miJornadaDatos",JSON.stringify(estado));
   } catch(e) {
     alert("No se pudieron guardar los datos. Exporta un respaldo y revisa el espacio disponible del navegador.");
-    console.error(e);
   }
 }
-function currentProfile() {
-  return app.profiles.find(p => p.id === app.activeId) || app.profiles[0];
+function D(){return estado.datos[estado.perfilActivo];}
+function perfil(){return estado.perfiles.find(p=>p.id===estado.perfilActivo);}
+function aviso(msg){alert(msg);}
+function filasVacias(id,n,textoVacio){
+  $(id).innerHTML='<tr><td colspan="'+n+'" class="empty">'+escapeHTML(textoVacio)+'</td></tr>';
 }
-function setDefaultDates() {
-  const d = todayISO();
-  ["incomeDate","fuelDate","expenseDate","bookDate"].forEach(id => {
-    if (!$ (id).value) $(id).value = d;
-  });
-  if (!$("periodFrom").value || !$("periodTo").value) setCurrentMonth();
+function actualizarSelectPerfil(){
+  $("perfilActivo").innerHTML=estado.perfiles.map(p=>'<option value="'+escapeHTML(p.id)+'">'+escapeHTML(p.nombre)+'</option>').join("");
+  $("perfilActivo").value=estado.perfilActivo;
 }
-function setCurrentMonth() {
-  const d = new Date();
-  const first = new Date(d.getFullYear(),d.getMonth(),1);
-  $("periodFrom").value = `${first.getFullYear()}-${String(first.getMonth()+1).padStart(2,"0")}-${String(first.getDate()).padStart(2,"0")}`;
-  $("periodTo").value = todayISO();
-  renderHome();
+function irTab(id){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===id));
+  document.querySelectorAll("#navegacion button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));
+  renderTodo();
 }
-function inRange(date,from,to) {
-  return (!from || date >= from) && (!to || date <= to);
-}
-function sum(arr, key="amount") {
-  return arr.reduce((s,x)=>s+(Number(x[key])||0),0);
-}
-function daysBetween(from,to) {
-  if (!from || !to || from > to) return 0;
-  const a = new Date(from+"T12:00:00");
-  const b = new Date(to+"T12:00:00");
-  return Math.floor((b-a)/86400000)+1;
-}
-function renderProfiles() {
-  const select = $("profileSelect");
-  select.innerHTML = app.profiles.map(p =>
-    `<option value="${esc(p.id)}">${esc(p.name)}</option>`
-  ).join("");
-  select.value = app.activeId;
-}
-function showTab(tab) {
-  document.querySelectorAll(".tabs button").forEach(b =>
-    b.classList.toggle("active",b.dataset.tab===tab)
-  );
-  document.querySelectorAll(".view").forEach(v =>
-    v.classList.toggle("active",v.id===tab)
-  );
-  if (tab==="inicio") renderHome();
-  if (tab==="ingresos") renderIncomeList();
-  if (tab==="combustible") renderFuelList();
-  if (tab==="gastos") renderExpenseList();
-  if (tab==="libro") renderBookList();
-  if (tab==="historial") renderHistory();
-  if (tab==="configuracion") loadSettings();
-}
-document.querySelectorAll(".tabs button").forEach(b =>
-  b.addEventListener("click",()=>showTab(b.dataset.tab))
-);
-
-function renderHome() {
-  const p=currentProfile();
-  const from=$("periodFrom").value;
-  const to=$("periodTo").value;
-  if (from && to && from>to) {
-    $("goalMessage").textContent="La fecha inicial no puede ser posterior a la fecha final.";
-    return;
-  }
-  const inc=p.incomes.filter(x=>inRange(x.date,from,to));
-  const fuel=p.fuels.filter(x=>inRange(x.date,from,to));
-  const exp=p.expenses.filter(x=>inRange(x.date,from,to));
-  const income=sum(inc);
-  const fuelTotal=sum(fuel);
-  const expenseTotal=sum(exp);
-  const result=income-fuelTotal-expenseTotal;
-  const worked=new Set(inc.map(x=>x.date)).size;
-  const goal=Number(p.settings.dailyGoal)||0;
-  const periodGoal=goal*worked;
-  const difference=result-periodGoal;
-  $("sumIncome").textContent=money(income);
-  $("sumFuel").textContent=money(fuelTotal);
-  $("sumExpenses").textContent=money(expenseTotal);
-  $("sumResult").textContent=money(result);
-  $("sumResult").className="value "+(result>=0?"positive":"negative");
-  $("dailyGoalDisplay").textContent=money(goal);
-  $("periodGoalDisplay").textContent=money(periodGoal);
-  $("daysWorkedDisplay").textContent=worked;
-  $("goalDifference").textContent=money(difference);
-  $("goalDifference").className=difference>=0?"positive":"negative";
-  $("goalMessage").textContent = worked===0
-    ? "Todavía no hay ingresos registrados en este período."
-    : difference>=0
-      ? "Según los registros, estás por encima de la meta acumulada."
-      : "Según los registros, faltan "+money(Math.abs(difference))+" para alcanzar la meta acumulada.";
-  const liters=sum(fuel,"liters");
-  const price=liters>0?fuelTotal/liters:0;
-  $("sumLiters").textContent=number(liters)+" L";
-  $("avgFuelPrice").textContent=money(price);
-  $("avgFuelDay").textContent=money(worked?fuelTotal/worked:0);
-}
-function tableHTML(headers,rows) {
-  if (!rows.length) return '<div class="empty">No hay registros para mostrar.</div>';
-  return `<div class="table-wrap"><table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
-}
-function deleteButton(type,id) {
-  return `<button type="button" class="danger small" data-delete-type="${type}" data-delete-id="${esc(id)}">Eliminar</button>`;
-}
-function bindDelete() {
-  document.querySelectorAll("[data-delete-type]").forEach(btn=>{
-    btn.onclick=()=>{
-      if (!confirm("¿Eliminar este registro? Esta acción no se puede deshacer.")) return;
-      const p=currentProfile();
-      const map={ingreso:"incomes",combustible:"fuels",gasto:"expenses",libro:"books"};
-      const key=map[btn.dataset.deleteType];
-      if (!key) return;
-      p[key]=p[key].filter(x=>x.id!==btn.dataset.deleteId);
-      saveData(); renderAll();
-    };
-  });
-}
-function renderIncomeList() {
-  const p=currentProfile();
-  const rows=[...p.incomes].sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<tr>
-    <td>${esc(x.date)}</td><td>${esc(x.platform)}</td><td>${money(x.amount)}</td>
-    <td>${x.hours?number(x.hours)+" h":"—"}</td><td>${esc(x.note||"")}</td>
-    <td>${deleteButton("ingreso",x.id)}</td></tr>`);
-  $("incomeList").innerHTML=tableHTML(["Fecha","Plataforma","Ingreso","Horas","Observación","Acción"],rows);
-  bindDelete();
-}
-function renderFuelList() {
-  const p=currentProfile();
-  const rows=[...p.fuels].sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<tr>
-    <td>${esc(x.date)}</td><td>${esc(x.station||"—")}</td><td>${number(x.liters)} L</td>
-    <td>${money(x.price)}</td><td>${money(x.amount)}</td>
-    <td>${deleteButton("combustible",x.id)}</td></tr>`);
-  $("fuelList").innerHTML=tableHTML(["Fecha","Estación","Litros","$/litro","Costo total","Acción"],rows);
-  bindDelete();
-}
-function renderExpenseList() {
-  const p=currentProfile();
-  const rows=[...p.expenses].sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<tr>
-    <td>${esc(x.date)}</td><td>${esc(x.category)}</td><td>${money(x.amount)}</td>
-    <td>${esc(x.note||"")}</td><td>${deleteButton("gasto",x.id)}</td></tr>`);
-  $("expenseList").innerHTML=tableHTML(["Fecha","Categoría","Monto","Detalle","Acción"],rows);
-  bindDelete();
-}
-function renderBookList() {
-  const p=currentProfile();
-  const latest={};
-  [...p.books].sort((a,b)=>a.date.localeCompare(b.date)||a.created-b.created)
-    .forEach(x=>latest[x.account.toLowerCase()]=x);
-  const currentRows=Object.values(latest).sort((a,b)=>a.account.localeCompare(b.account))
-    .map(x=>`<tr><td>${esc(x.account)}</td><td>${money(x.balance)}</td><td>${esc(x.date)}</td></tr>`);
-  $("bookCurrent").innerHTML=tableHTML(["Cuenta o fondo","Último saldo","Fecha"],currentRows);
-  const rows=[...p.books].sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created)
-    .map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.account)}</td><td>${money(x.balance)}</td>
-      <td>${esc(x.note||"")}</td><td>${deleteButton("libro",x.id)}</td></tr>`);
-  $("bookList").innerHTML=tableHTML(["Fecha","Cuenta","Saldo","Observación","Acción"],rows);
-  bindDelete();
-}
-function allHistory() {
-  const p=currentProfile();
-  return [
-    ...p.incomes.map(x=>({...x,type:"ingreso",label:x.platform,amount:Number(x.amount)||0,detail:x.note||""})),
-    ...p.fuels.map(x=>({...x,type:"combustible",label:"Combustible",amount:Number(x.amount)||0,detail:(x.station||"")+" · "+number(x.liters)+" L"})),
-    ...p.expenses.map(x=>({...x,type:"gasto",label:x.category,amount:Number(x.amount)||0,detail:x.note||""})),
-    ...p.books.map(x=>({...x,type:"libro",label:"Saldo: "+x.account,amount:Number(x.balance)||0,detail:x.note||""}))
-  ].sort((a,b)=>b.date.localeCompare(a.date)||(b.created||0)-(a.created||0));
-}
-function renderHistory() {
-  const from=$("historyFrom").value;
-  const to=$("historyTo").value;
-  const type=$("historyType").value;
-  const records=allHistory().filter(x=>inRange(x.date,from,to)&&(type==="todos"||x.type===type));
-  const rows=records.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.type)}</td>
-    <td>${esc(x.label)}</td><td>${money(x.amount)}</td><td>${esc(x.detail)}</td></tr>`);
-  $("historyList").innerHTML=tableHTML(["Fecha","Tipo","Detalle","Monto o saldo","Observación"],rows);
-}
-function loadSettings() {
-  const s=currentProfile().settings;
-  $("dailyGoal").value=s.dailyGoal??0;
-  $("workDays").value=s.workDays??6;
-  $("periodStartDay").value=s.periodStartDay??1;
-  $("monthlyCommitments").value=s.monthlyCommitments??0;
-}
-function renderAll() {
-  renderProfiles();
-  renderHome();
-  renderIncomeList();
-  renderFuelList();
-  renderExpenseList();
-  renderBookList();
-  renderHistory();
-  loadSettings();
-}
-
-$("profileSelect").addEventListener("change",()=>{
-  app.activeId=$("profileSelect").value;
-  saveData(); renderAll();
+$("navegacion").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-tab]");
+  if(b)irTab(b.dataset.tab);
 });
-$("newProfileBtn").addEventListener("click",()=>{
-  const name=prompt("Nombre del nuevo perfil:");
-  if (name===null) return;
-  if (!name.trim()) { alert("Escribe un nombre para el perfil."); return; }
-  if (app.profiles.some(p=>p.name.toLowerCase()===name.trim().toLowerCase())) {
-    alert("Ya existe un perfil con ese nombre."); return;
-  }
-  const p=newProfile(name.trim());
-  app.profiles.push(p);
-  app.activeId=p.id;
-  saveData(); renderAll();
-  showTab("inicio");
-});
-$("deleteProfileBtn").addEventListener("click",()=>{
-  if (app.profiles.length<=1) {
-    alert("Debe existir al menos un perfil."); return;
-  }
-  const p=currentProfile();
-  if (!confirm(`¿Eliminar el perfil "${p.name}" y todos sus registros?`)) return;
-  app.profiles=app.profiles.filter(x=>x.id!==p.id);
-  app.activeId=app.profiles[0].id;
-  saveData(); renderAll();
+$("perfilActivo").addEventListener("change",()=>{
+  estado.perfilActivo=$("perfilActivo").value;
+  guardar(); cargarConfiguracion(); renderTodo();
 });
 
-$("incomeForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const p=currentProfile();
-  const amount=Number($("incomeAmount").value);
-  if (!Number.isFinite(amount)||amount<0) { alert("Ingresa un monto válido."); return; }
-  p.incomes.push({
-    id:uid(),created:Date.now(),date:$("incomeDate").value,
-    platform:$("incomePlatform").value,amount,
-    hours:Number($("incomeHours").value)||0,note:$("incomeNote").value.trim()
-  });
-  saveData(); $("incomeForm").reset(); $("incomeDate").value=todayISO();
-  renderAll(); alert("Ingreso guardado.");
-});
-$("fuelLiters").addEventListener("input",calculateFuel);
-$("fuelPrice").addEventListener("input",calculateFuel);
-function calculateFuel() {
-  const liters=Number($("fuelLiters").value);
-  const price=Number($("fuelPrice").value);
-  if ($("fuelLiters").value!=="" && $("fuelPrice").value!=="" && liters>=0 && price>=0) {
-    $("fuelAmount").value=Math.round(liters*price);
-  }
+function mesesEntre(fecha,frecuencia){
+  if(frecuencia==="semanal")return sumarDias(fecha,7);
+  if(frecuencia==="anual")return sumarMeses(fecha,12);
+  return sumarMeses(fecha,1);
 }
-$("fuelForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const liters=Number($("fuelLiters").value)||0;
-  const price=Number($("fuelPrice").value)||0;
-  const amount=Number($("fuelAmount").value);
-  if (!Number.isFinite(amount)||amount<=0) {
-    alert("Ingresa litros y precio por litro, o el costo total de la carga."); return;
+function generarVencimientos(c){
+  if(c.tipo==="unica")return [{fecha:c.fecha,monto:c.monto,pagado:false,id:uid(),numero:1}];
+  if(c.tipo==="cuotas"){
+    return Array.from({length:Math.min(600,Math.max(1,c.cantidad||1))},(_,i)=>({
+      id:uid(),fecha:sumarMeses(c.fecha,i),monto:c.monto,pagado:false,numero:i+1
+    }));
   }
-  if (liters>0 && price>0 && Math.abs(amount-liters*price)>2 &&
-      !confirm("El costo total no coincide con litros × precio por litro. ¿Deseas guardarlo de todas formas?")) return;
-  currentProfile().fuels.push({
-    id:uid(),created:Date.now(),date:$("fuelDate").value,
-    station:$("fuelStation").value.trim(),liters,price,amount
+  const lista=[];
+  let fecha=c.fecha;
+  // Se guardan 10 años de vencimientos futuros como máximo.
+  for(let i=0;i<120;i++){
+    lista.push({id:uid(),fecha,monto:c.monto,pagado:false,numero:i+1});
+    fecha=mesesEntre(fecha,c.frecuencia);
+  }
+  return lista;
+}
+
+let editJornada=null, editCuenta=null;
+function limpiarEdicionJornada(){
+  editJornada=null;$("formJornada").reset();
+  $("jFecha").value=hoy();$("jEfectivo").value=0;$("jTarjeta").value=0;
+  $("guardarJornada").textContent="Guardar jornada";$("cancelarJornada").hidden=true;
+}
+function limpiarEdicionCuenta(){
+  editCuenta=null;$("formCuenta").reset();$("cPrimeraFecha").value=hoy();
+  $("cNumeroCuotas").value=1;
+  $("guardarCuenta").textContent="Guardar cuenta";$("cancelarCuenta").hidden=true;
+  mostrarCamposCuenta();
+}
+function mostrarCamposCuenta(){
+  const tipo=$("cTipo").value;
+  $("grupoCuotas").hidden=tipo!=="cuotas";
+  $("grupoFrecuencia").hidden=tipo!=="recurrente";
+}
+$("cTipo").addEventListener("change",mostrarCamposCuenta);
+$("cancelarJornada").addEventListener("click",limpiarEdicionJornada);
+$("cancelarCuenta").addEventListener("click",limpiarEdicionCuenta);
+
+$("formJornada").addEventListener("submit",e=>{
+  e.preventDefault();
+  const ingreso=numero("jIngreso"),horas=numero("jHoras"),km=numero("jKm");
+  const fecha=$("jFecha").value;
+  if(!fechaValida(fecha)){aviso("Selecciona una fecha válida.");return;}
+  const registro={
+    id:editJornada||uid(),fecha,plataforma:$("jPlataforma").value,
+    ingreso,horas,km,efectivo:numero("jEfectivo"),tarjeta:numero("jTarjeta"),
+    saldoApp:$("jSaldoApp").value===""?null:numero("jSaldoApp"),nota:texto("jNota")
+  };
+  if(registro.efectivo+registro.tarjeta>registro.ingreso && registro.ingreso>0){
+    if(!confirm("El efectivo y las tarjetas superan la ganancia del día. ¿Deseas guardar igualmente?"))return;
+  }
+  const lista=D().jornadas;
+  const i=lista.findIndex(x=>x.id===registro.id);
+  if(i>=0)lista[i]=registro;else lista.push(registro);
+  guardar();limpiarEdicionJornada();renderTodo();
+});
+
+function editarJornada(id){
+  const j=D().jornadas.find(x=>x.id===id);if(!j)return;
+  editJornada=id;
+  $("jFecha").value=j.fecha;$("jPlataforma").value=j.plataforma;
+  $("jIngreso").value=j.ingreso;$("jHoras").value=j.horas||"";
+  $("jKm").value=j.km||"";$("jEfectivo").value=j.efectivo||0;
+  $("jTarjeta").value=j.tarjeta||0;
+  $("jSaldoApp").value=j.saldoApp??"";$("jNota").value=j.nota||"";
+  $("guardarJornada").textContent="Guardar cambios";
+  $("cancelarJornada").hidden=false;
+  $("formJornada").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function eliminarJornada(id){
+  if(!confirm("¿Eliminar esta jornada?"))return;
+  D().jornadas=D().jornadas.filter(x=>x.id!==id);guardar();renderTodo();
+}
+
+$("formCuenta").addEventListener("submit",e=>{
+  e.preventDefault();
+  const tipo=$("cTipo").value,fecha=$("cPrimeraFecha").value,monto=numero("cMonto");
+  const cantidad=Math.floor(numero("cNumeroCuotas"));
+  if(!fechaValida(fecha)||monto<=0){aviso("Revisa la fecha y el monto.");return;}
+  if(tipo==="cuotas"&&(!cantidad||cantidad>600)){aviso("Ingresa entre 1 y 600 cuotas.");return;}
+  const c={
+    id:editCuenta||uid(),descripcion:texto("cDescripcion"),beneficiario:texto("cBeneficiario"),
+    tipo,monto,fecha,cantidad:tipo==="cuotas"?cantidad:1,
+    frecuencia:$("cFrecuencia").value,nota:texto("cNota")
+  };
+  if(editCuenta){
+    const old=D().cuentas.find(x=>x.id===editCuenta);
+    c.vencimientos=old&&old.tipo===c.tipo&&old.fecha===c.fecha&&old.monto===c.monto&&old.cantidad===c.cantidad&&old.frecuencia===c.frecuencia
+      ?old.vencimientos:generarVencimientos(c);
+    const i=D().cuentas.findIndex(x=>x.id===editCuenta);
+    if(i>=0)D().cuentas[i]=c;
+  } else {
+    c.vencimientos=generarVencimientos(c);D().cuentas.push(c);
+  }
+  guardar();limpiarEdicionCuenta();renderTodo();
+});
+function editarCuenta(id){
+  const c=D().cuentas.find(x=>x.id===id);if(!c)return;
+  editCuenta=id;$("cDescripcion").value=c.descripcion;
+  $("cBeneficiario").value=c.beneficiario||"";$("cTipo").value=c.tipo;
+  $("cMonto").value=c.monto;$("cPrimeraFecha").value=c.fecha;
+  $("cNumeroCuotas").value=c.cantidad||1;$("cFrecuencia").value=c.frecuencia||"mensual";
+  $("cNota").value=c.nota||"";mostrarCamposCuenta();
+  $("guardarCuenta").textContent="Guardar cambios";$("cancelarCuenta").hidden=false;
+  $("formCuenta").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function eliminarCuenta(id){
+  if(!confirm("¿Eliminar esta cuenta y sus vencimientos?"))return;
+  D().cuentas=D().cuentas.filter(c=>c.id!==id);guardar();renderTodo();
+}
+function buscarVencimiento(idCuenta,idVencimiento){
+  const c=D().cuentas.find(x=>x.id===idCuenta);
+  return c&&c.vencimientos.find(v=>v.id===idVencimiento);
+}
+function cambiarEstadoCuenta(idCuenta,idVencimiento){
+  const v=buscarVencimiento(idCuenta,idVencimiento);if(!v)return;
+  v.pagado=!v.pagado;guardar();renderTodo();
+}
+function agregarVencimiento(idCuenta){
+  const c=D().cuentas.find(x=>x.id===idCuenta);if(!c)return;
+  const lista=c.vencimientos;
+  const ultima=lista[lista.length-1];
+  const fecha=ultima?mesesEntre(ultima.fecha,c.frecuencia||"mensual"):c.fecha;
+  if(c.tipo!=="recurrente"){aviso("Solo las cuentas recurrentes permiten agregar vencimientos adicionales.");return;}
+  if(lista.length>=600){aviso("Esta cuenta alcanzó el máximo de vencimientos guardados.");return;}
+  lista.push({id:uid(),fecha,monto:c.monto,pagado:false,numero:lista.length+1});
+  guardar();renderTodo();
+}
+
+$("formCombustible").addEventListener("submit",e=>{
+  e.preventDefault();
+  const fecha=$("bFecha").value,litros=Number($("bLitros").value),precio=Number($("bPrecio").value);
+  if(!fechaValida(fecha)||litros<=0||precio<=0){aviso("Ingresa fecha, litros y precio válidos.");return;}
+  D().combustibles.push({
+    id:uid(),fecha,litros,precio,costo:litros*precio,
+    km:$("bKm").value===""?null:Number($("bKm").value),nota:texto("bNota")
   });
-  saveData(); $("fuelForm").reset(); $("fuelDate").value=todayISO();
-  renderAll(); alert("Carga de combustible guardada.");
+  guardar();$("formCombustible").reset();$("bFecha").value=hoy();renderTodo();
 });
-$("expenseForm").addEventListener("submit",e=>{
+function eliminarCombustible(id){
+  if(!confirm("¿Eliminar esta carga de combustible?"))return;
+  D().combustibles=D().combustibles.filter(x=>x.id!==id);guardar();renderTodo();
+}
+function analizarCargas(lista){
+  const orden=[...lista].filter(x=>x.km!==null&&Number.isFinite(x.km)).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  const tramos=[];
+  for(let i=1;i<orden.length;i++){
+    const km=orden[i].km-orden[i-1].km;
+    if(km>0 && orden[i].litros>0)tramos.push({km,litros:orden[i].litros,rendimiento:km/orden[i].litros});
+  }
+  if(!tramos.length)return null;
+  const totalKm=tramos.reduce((s,x)=>s+x.km,0);
+  const totalLitros=tramos.reduce((s,x)=>s+x.litros,0);
+  return {km:totalKm,litros:totalLitros,rendimiento:totalKm/totalLitros};
+}
+$("analizarCombustible").addEventListener("click",()=>{
+  if($("bDesde").value && $("bHasta").value && $("bDesde").value>$("bHasta").value){
+    aviso("La fecha inicial no puede ser posterior a la fecha final.");return;
+  }
+  renderCombustible();
+});
+
+$("formLibro").addEventListener("submit",e=>{
   e.preventDefault();
-  const amount=Number($("expenseAmount").value);
-  if (!Number.isFinite(amount)||amount<=0) { alert("Ingresa un monto mayor que cero."); return; }
-  currentProfile().expenses.push({
-    id:uid(),created:Date.now(),date:$("expenseDate").value,
-    category:$("expenseCategory").value,amount,note:$("expenseNote").value.trim()
-  });
-  saveData(); $("expenseForm").reset(); $("expenseDate").value=todayISO();
-  renderAll(); alert("Gasto guardado.");
+  D().libro.push({id:uid(),fecha:$("lFecha").value,cuenta:texto("lCuenta"),monto:numero("lMonto"),tipo:$("lTipo").value,nota:texto("lNota")});
+  guardar();$("formLibro").reset();$("lFecha").value=hoy();renderTodo();
 });
-$("bookForm").addEventListener("submit",e=>{
+function eliminarLibro(id){
+  if(!confirm("¿Eliminar este registro de saldo?"))return;
+  D().libro=D().libro.filter(x=>x.id!==id);guardar();renderTodo();
+}
+$("formAhorro").addEventListener("submit",e=>{
   e.preventDefault();
-  const account=$("bookAccount").value.trim();
-  const balance=Number($("bookBalance").value);
-  if (!account || !Number.isFinite(balance)||balance<0) {
-    alert("Ingresa una cuenta y un saldo válido."); return;
-  }
-  currentProfile().books.push({
-    id:uid(),created:Date.now(),date:$("bookDate").value,
-    account,balance,note:$("bookNote").value.trim()
-  });
-  saveData(); $("bookForm").reset(); $("bookDate").value=todayISO();
-  renderAll(); alert("Saldo guardado.");
+  D().ahorros.push({id:uid(),fecha:$("aFecha").value,monto:numero("aMonto"),nota:texto("aNota")});
+  guardar();$("formAhorro").reset();$("aFecha").value=hoy();renderTodo();
 });
-$("settingsForm").addEventListener("submit",e=>{
+function eliminarAhorro(id){
+  if(!confirm("¿Eliminar este registro de ahorro?"))return;
+  D().ahorros=D().ahorros.filter(x=>x.id!==id);guardar();renderTodo();
+}
+
+$("formPerfil").addEventListener("submit",e=>{
   e.preventDefault();
-  const dailyGoal=Number($("dailyGoal").value);
-  const workDays=Number($("workDays").value);
-  const periodStartDay=Number($("periodStartDay").value);
-  const monthlyCommitments=Number($("monthlyCommitments").value);
-  if (dailyGoal<0||workDays<1||workDays>7||periodStartDay<1||periodStartDay>28||monthlyCommitments<0) {
-    alert("Revisa los valores de la configuración."); return;
-  }
-  currentProfile().settings={dailyGoal,workDays,periodStartDay,monthlyCommitments};
-  saveData(); renderAll(); alert("Configuración guardada.");
+  const nombre=texto("pNombre");
+  if(!nombre)return;
+  const id=uid();
+  estado.perfiles.push({id,nombre,dias:Math.min(31,Math.max(1,Math.floor(numero("pDias"))))});
+  estado.datos[id]={jornadas:[],cuentas:[],combustibles:[],libro:[],ahorros:[],meta:500000,periodoInicio:1,periodoFin:31};
+  estado.perfilActivo=id;guardar();$("formPerfil").reset();$("pDias").value=26;
+  actualizarSelectPerfil();cargarConfiguracion();renderTodo();
 });
-$("applyPeriod").addEventListener("click",()=>{
-  if ($("periodFrom").value && $("periodTo").value && $("periodFrom").value>$("periodTo").value) {
-    alert("La fecha Desde no puede ser posterior a Hasta."); return;
-  }
-  renderHome();
+function eliminarPerfil(id){
+  if(estado.perfiles.length===1){aviso("Debe existir al menos un perfil.");return;}
+  const p=estado.perfiles.find(x=>x.id===id);
+  if(!p||!confirm("¿Eliminar el perfil "+p.nombre+" y todos sus registros? Esta acción no se puede deshacer."))return;
+  estado.perfiles=estado.perfiles.filter(x=>x.id!==id);delete estado.datos[id];
+  if(estado.perfilActivo===id)estado.perfilActivo=estado.perfiles[0].id;
+  guardar();actualizarSelectPerfil();cargarConfiguracion();renderTodo();
+}
+$("guardarMeta").addEventListener("click",()=>{
+  D().meta=numero("metaPersonal");guardar();renderTodo();aviso("Meta mensual guardada.");
 });
-$("currentMonth").addEventListener("click",setCurrentMonth);
-$("filterHistory").addEventListener("click",()=>{
-  if ($("historyFrom").value && $("historyTo").value && $("historyFrom").value>$("historyTo").value) {
-    alert("La fecha Desde no puede ser posterior a Hasta."); return;
-  }
-  renderHistory();
+$("guardarPeriodo").addEventListener("click",()=>{
+  const ini=Math.floor(numero("periodoInicio")),fin=Math.floor(numero("periodoFin"));
+  if(ini<1||ini>28||fin<1||fin>31){aviso("El día de inicio debe estar entre 1 y 28 y el término entre 1 y 31.");return;}
+  D().periodoInicio=ini;D().periodoFin=fin;guardar();aviso("Período guardado.");
 });
-$("exportBtn").addEventListener("click",()=>{
-  const p=currentProfile();
-  const blob=new Blob([JSON.stringify({version:1,profile:p},null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download="Mi-Jornada-"+p.name.replace(/[^a-z0-9_-]/gi,"_")+"-"+todayISO()+".json";
-  document.body.appendChild(a); a.click(); a.remove();
-  URL.revokeObjectURL(url);
-});
-$("importBtn").addEventListener("click",()=>$("importFile").click());
-$("importFile").addEventListener("change",async()=>{
-  const file=$("importFile").files[0];
-  if (!file) return;
-  try {
-    const data=JSON.parse(await file.text());
-    const imported=data.profile || data;
-    if (!imported || !imported.name || !Array.isArray(imported.incomes) ||
-        !Array.isArray(imported.fuels) || !Array.isArray(imported.expenses) ||
-        !Array.isArray(imported.books)) {
-      throw new Error("Formato de respaldo no reconocido.");
+
+function cargarConfiguracion(){
+  $("metaPersonal").value=D().meta;
+  $("periodoInicio").value=D().periodoInicio||1;
+  $("periodoFin").value=D().periodoFin||31;
+  $("tablaPerfiles").innerHTML=estado.perfiles.map(p=>'<tr><td>'+escapeHTML(p.nombre)+(p.id===estado.perfilActivo?' <span class="badge">Activo</span>':'')+'</td><td>'+p.dias+'</td><td>'+(p.id===estado.perfilActivo?'':('<button class="danger small" data-action="perfil-del" data-id="'+p.id+'">Eliminar</button>'))+'</td></tr>').join("");
+  if(!estado.perfiles.length)filasVacias("tablaPerfiles",3,"No hay perfiles.");
+}
+function renderJornadas(){
+  const mes=$("filtroJornada").value,plataforma=$("filtroPlataforma").value;
+  const lista=D().jornadas.filter(j=>(!mes||j.fecha.startsWith(mes))&&(!plataforma||j.plataforma===plataforma)).sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  if(!lista.length){filasVacias("tablaJornadas",7,"No hay jornadas para estos filtros.");return;}
+  $("tablaJornadas").innerHTML=lista.map(j=>'<tr><td>'+j.fecha+'</td><td>'+escapeHTML(j.plataforma)+'</td><td>'+pesos(j.ingreso)+'</td><td>'+(j.horas||"—")+'</td><td>'+(j.horas>0?pesos(j.ingreso/j.horas):"—")+'</td><td>'+(j.km||"—")+'</td><td><button class="secondary small" data-action="j-edit" data-id="'+j.id+'">Editar</button> <button class="danger small" data-action="j-del" data-id="'+j.id+'">Eliminar</button></td></tr>').join("");
+}
+function renderCuentas(){
+  const cuentas=D().cuentas;
+  if(!cuentas.length)filasVacias("tablaCuentas",6,"No hay cuentas registradas.");
+  else $("tablaCuentas").innerHTML=cuentas.map(c=>{
+    const pendientes=c.vencimientos.filter(v=>!v.pagado).length;
+    const tipo=c.tipo==="unica"?"Una vez":c.tipo==="cuotas"?"Cuotas":"Recurrente";
+    return '<tr><td>'+escapeHTML(c.descripcion)+'</td><td>'+escapeHTML(c.beneficiario||"—")+'</td><td>'+tipo+'</td><td>'+pesos(c.monto)+'</td><td>'+pendientes+' pendiente(s) / '+c.vencimientos.length+' registrado(s)</td><td><button class="secondary small" data-action="c-edit" data-id="'+c.id+'">Editar</button> <button class="secondary small" data-action="c-add" data-id="'+c.id+'" '+(c.tipo!=="recurrente"?"disabled":"")+' title="Agregar otro vencimiento">+ Pago</button> <button class="danger small" data-action="c-del" data-id="'+c.id+'">Eliminar</button></td></tr>';
+  }).join("");
+  const mes=$("filtroCuentas").value,estadoFiltro=$("filtroEstadoCuenta").value;
+  const vencimientos=[];
+  cuentas.forEach(c=>(c.vencimientos||[]).forEach(v=>{
+    if((!mes||v.fecha.startsWith(mes))&&(!estadoFiltro||(estadoFiltro==="pagado"?v.pagado:!v.pagado))){
+      vencimientos.push({c,v});
     }
-    if (!confirm("Se importarán los datos como un perfil nuevo. ¿Continuar?")) return;
-    const copy=JSON.parse(JSON.stringify(imported));
-    copy.id=uid();
-    copy.name=imported.name+" (importado)";
-    copy.settings ||= {dailyGoal:0,workDays:6,periodStartDay:1,monthlyCommitments:0};
-    app.profiles.push(copy);
-    app.activeId=copy.id;
-    saveData(); renderAll(); showTab("inicio");
-    alert("Respaldo importado.");
-  } catch(err) {
-    alert("No se pudo importar el archivo: "+err.message);
-  } finally {
-    $("importFile").value="";
+  }));
+  vencimientos.sort((a,b)=>a.v.fecha.localeCompare(b.v.fecha));
+  if(!vencimientos.length)filasVacias("tablaVencimientos",6,"No hay vencimientos para estos filtros.");
+  else $("tablaVencimientos").innerHTML=vencimientos.map(({c,v})=>'<tr><td>'+v.fecha+'</td><td>'+escapeHTML(c.descripcion)+'</td><td>'+escapeHTML(c.beneficiario||"—")+'</td><td>'+pesos(v.monto)+'</td><td><span class="badge '+(v.pagado?"paid":"unpaid")+'">'+(v.pagado?"Pagado":"Pendiente")+'</span></td><td><button class="'+(v.pagado?"secondary":"green")+' small" data-action="c-pay" data-id="'+c.id+'" data-vid="'+v.id+'">'+(v.pagado?"Desmarcar":"Marcar pagado")+'</button></td></tr>').join("");
+}
+function renderCombustible(){
+  const all=D().combustibles;
+  const desde=$("bDesde").value,hasta=$("bHasta").value;
+  const lista=all.filter(x=>(!desde||x.fecha>=desde)&&(!hasta||x.fecha<=hasta)).sort(porFecha);
+  const litros=lista.reduce((s,x)=>s+x.litros,0),costo=lista.reduce((s,x)=>s+x.costo,0);
+  $("bTotalLitros").textContent=litros.toLocaleString("es-CL",{maximumFractionDigits:2});
+  $("bTotalCosto").textContent=pesos(costo);
+  $("bPromPrecio").textContent=litros?pesos(costo/litros):"$0";
+  const r=analizarCargas(lista);
+  $("bRendimiento").textContent=r?r.rendimiento.toLocaleString("es-CL",{maximumFractionDigits:2})+" km/l":"—";
+  $("resumenCombustible").textContent="Período: "+(desde||"sin inicio")+" al "+(hasta||"sin término")+". Cargas: "+lista.length+". Litros: "+litros.toLocaleString("es-CL",{maximumFractionDigits:2})+". Costo: "+pesos(costo)+"."+(r?" Kilómetros entre cargas registradas: "+r.km.toLocaleString("es-CL",{maximumFractionDigits:1})+". Rendimiento calculado: "+r.rendimiento.toLocaleString("es-CL",{maximumFractionDigits:2})+" km/l.":" Aún no hay dos kilometrajes válidos consecutivos para calcular rendimiento.");
+  if(!all.length)filasVacias("tablaCombustible",6,"No hay cargas registradas.");
+  else $("tablaCombustible").innerHTML=[...all].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(x=>'<tr><td>'+x.fecha+'</td><td>'+x.litros.toLocaleString("es-CL",{maximumFractionDigits:2})+'</td><td>'+pesos(x.precio)+'</td><td>'+pesos(x.costo)+'</td><td>'+(x.km??"—")+'</td><td><button class="danger small" data-action="b-del" data-id="'+x.id+'">Eliminar</button></td></tr>').join("");
+}
+function renderLibro(){
+  const fecha=$("lFiltroFecha").value||hoy();
+  const registros=D().libro.filter(x=>x.fecha===fecha);
+  const total=registros.reduce((s,x)=>s+x.monto,0);
+  const bancos=registros.filter(x=>x.tipo==="Cuenta bancaria").reduce((s,x)=>s+x.monto,0);
+  const efectivo=registros.filter(x=>x.tipo.startsWith("Efectivo")).reduce((s,x)=>s+x.monto,0);
+  const ahorros=registros.filter(x=>x.tipo==="Ahorro").reduce((s,x)=>s+x.monto,0);
+  $("lTotal").textContent=pesos(total);$("lBancos").textContent=pesos(bancos);
+  $("lEfectivo").textContent=pesos(efectivo);$("lAhorros").textContent=pesos(ahorros);
+  if(!registros.length)filasVacias("tablaLibro",5,"No hay saldos registrados en esta fecha.");
+  else $("tablaLibro").innerHTML=registros.map(x=>'<tr><td>'+x.fecha+'</td><td>'+escapeHTML(x.cuenta)+'</td><td>'+escapeHTML(x.tipo)+'</td><td>'+pesos(x.monto)+'</td><td><button class="danger small" data-action="l-del" data-id="'+x.id+'">Eliminar</button></td></tr>').join("");
+  const lista=[...D().ahorros].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  if(!lista.length)filasVacias("tablaAhorros",4,"Todavía no hay ahorros registrados.");
+  else $("tablaAhorros").innerHTML=lista.map(x=>'<tr><td>'+x.fecha+'</td><td>'+escapeHTML(x.nota)+'</td><td>'+pesos(x.monto)+'</td><td><button class="danger small" data-action="a-del" data-id="'+x.id+'">Eliminar</button></td></tr>').join("");
+}
+function renderResumen(){
+  const mes=$("mesResumen").value||mesActual();
+  const inicio=inicioMes(mes),fin=finMes(mes);
+  const jornadas=D().jornadas.filter(x=>x.fecha>=inicio&&x.fecha<=fin);
+  const ingresos=jornadas.reduce((s,x)=>s+x.ingreso,0);
+  const combustible=D().combustibles.filter(x=>x.fecha>=inicio&&x.fecha<=fin).reduce((s,x)=>s+x.costo,0);
+  const gastos=combustible;
+  const vencimientos=[];
+  D().cuentas.forEach(c=>(c.vencimientos||[]).forEach(v=>{
+    if(v.fecha>=inicio&&v.fecha<=fin&&!v.pagado)vencimientos.push(v);
+  }));
+  const cuentas=vencimientos.reduce((s,v)=>s+v.monto,0);
+  const saldo=ingresos-gastos-cuentas;
+  const meta=Number(D().meta)||0;
+  const dias=new Set(jornadas.map(x=>x.fecha)).size;
+  const pendientes=Math.max(0,meta-saldo);
+  const diasEstimados=Math.max(1,Number(perfil().dias)||26);
+  const diario=Math.max(0,(gastos+cuentas+meta)/diasEstimados);
+  $("sIngresos").textContent=pesos(ingresos);
+  $("sGastos").textContent=pesos(gastos);
+  $("sCuentas").textContent=pesos(cuentas);
+  $("sSaldo").textContent=pesos(saldo);
+  $("sSaldo").className=saldo<0?"bad":"good";
+  $("sMeta").textContent=pesos(meta);
+  $("sFalta").textContent=pesos(pendientes);
+  $("sDias").textContent=dias;
+  $("sPromedio").textContent=pesos(dias?ingresos/dias:0);
+  $("diarioRequerido").textContent=pesos(diario);
+  $("combustibleMes").textContent=pesos(combustible);
+  const diag=$("diagnostico");
+  if(!jornadas.length){
+    diag.textContent="Todavía no hay jornadas registradas en este mes. Ingresa tus ingresos y gastos para obtener un diagnóstico basado en tus datos.";
+  } else if(saldo>=meta){
+    diag.textContent="Según los registros del mes, el saldo después del combustible y de las cuotas pendientes alcanza tu meta personal. Verifica que estén incluidos todos tus gastos y compromisos.";
+  } else {
+    diag.textContent="Con los registros actuales, faltan "+pesos(meta-saldo)+" para alcanzar tu meta personal. El saldo estimado considera ingresos registrados, combustible y vencimientos pendientes, pero no otros gastos que no hayas ingresado.";
+  }
+}
+function renderTodo(){
+  renderResumen();renderJornadas();renderCuentas();renderCombustible();renderLibro();
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-action]");if(!b)return;
+  const id=b.dataset.id,vid=b.dataset.vid;
+  switch(b.dataset.action){
+    case "j-edit":editarJornada(id);break;
+    case "j-del":eliminarJornada(id);break;
+    case "c-edit":editarCuenta(id);break;
+    case "c-del":eliminarCuenta(id);break;
+    case "c-add":agregarVencimiento(id);break;
+    case "c-pay":cambiarEstadoCuenta(id,vid);break;
+    case "b-del":eliminarCombustible(id);break;
+    case "l-del":eliminarLibro(id);break;
+    case "a-del":eliminarAhorro(id);break;
+    case "perfil-del":eliminarPerfil(id);break;
   }
 });
+["mesResumen","filtroJornada","filtroPlataforma","filtroCuentas","filtroEstadoCuenta","lFiltroFecha"].forEach(id=>{
+  $(id).addEventListener("change",renderTodo);
+});
 
-setDefaultDates();
-$("historyFrom").value=$("periodFrom").value;
-$("historyTo").value=todayISO();
-renderAll();
+$("exportar").addEventListener("click",()=>{
+  const blob=new Blob([JSON.stringify(estado,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="mi-jornada-respaldo-"+hoy()+".json";
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+$("importarBtn").addEventListener("click",()=>$("importarArchivo").click());
+$("importarArchivo").addEventListener("change",async()=>{
+  const file=$("importarArchivo").files[0];if(!file)return;
+  try{
+    const obj=JSON.parse(await file.text());
+    if(!obj||!Array.isArray(obj.perfiles)||!obj.datos||!obj.perfiles.length)throw new Error("Formato");
+    if(!confirm("Restaurar este respaldo reemplazará los datos actuales. ¿Continuar?"))return;
+    estado=obj;normalizar();guardar();actualizarSelectPerfil();cargarConfiguracion();renderTodo();
+    aviso("Respaldo restaurado.");
+  }catch(err){aviso("No se pudo importar el archivo. Selecciona un respaldo JSON válido de Mi Jornada.");}
+  finally{$("importarArchivo").value="";}
+});
+$("borrarDatos").addEventListener("click",()=>{
+  if(!confirm("¿Estás seguro? Se borrarán todos los perfiles y registros de Mi Jornada guardados en este navegador."))return;
+  if(!confirm("Última confirmación: esta acción no se puede deshacer. ¿Borrar todo?"))return;
+  estado=datosIniciales();guardar();actualizarSelectPerfil();cargarConfiguracion();
+  limpiarEdicionJornada();limpiarEdicionCuenta();renderTodo();
+  aviso("Se han borrado los datos locales.");
+});
+
+function iniciar(){
+  const fechaIds=["jFecha","cPrimeraFecha","bFecha","lFecha","aFecha","lFiltroFecha"];
+  fechaIds.forEach(id=>$(id).value=hoy());
+  ["mesResumen","filtroJornada","filtroCuentas"].forEach(id=>$(id).value=mesActual());
+  $("filtroJornada").value=mesActual();
+  actualizarSelectPerfil();cargarConfiguracion();renderTodo();
+}
+iniciar();
+})();
 </script>
 </body>
 </html>
